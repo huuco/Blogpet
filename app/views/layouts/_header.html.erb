@@ -563,9 +563,10 @@
           <div class="ml-auto flex items-center">
             <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
               <% if user_signed_in? %>
-                <%= link_to "Log out", "#", class: "text-sm font-medium text-gray-700 hover:text-gray-800", data: {header_target: "sign_in"} %>
+                <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete, header_target: "logout"}, class: "text-sm font-medium text-gray-700 hover:text-gray-800 logout" %>
               <%else%>
-                <%= link_to "Sign in", "#", class: "text-sm font-medium text-gray-700 hover:text-gray-800", data: {header_target: "sign_in"} %>
+                <%= link_to "Sign In", "#", class: "text-sm font-medium text-gray-700 hover:text-gray-800", data: {header_target: "sign_in"} %>
+                <%= link_to "Sign Up", "#", class: "text-sm font-medium text-gray-700 hover:text-gray-800", data: {header_target: "sign_up"} %>
                 <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
                 <a href="#" class="text-sm font-medium text-gray-700 hover:text-gray-800">Create account</a>
               <% end %>

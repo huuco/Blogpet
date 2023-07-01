@@ -1,9 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ['people', 'cart', 'sign_in']
+  static targets = ['people', 'cart', 'sign_in', 'sign_up', 'logout']
 
   connect() {
+    if(!this.targets.findTarget('sign_in')){ // user signed in hidden link_to sign_in target
+      return;
+    }
+
     let women_list = document.getElementsByClassName('women-list');
     let men_list = document.getElementsByClassName('men-list');
     let shopping_cart = document.getElementsByClassName('shopping-cart');
