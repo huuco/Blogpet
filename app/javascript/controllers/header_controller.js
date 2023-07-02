@@ -4,10 +4,6 @@ export default class extends Controller {
   static targets = ['people', 'cart', 'sign_in', 'sign_up', 'logout']
 
   connect() {
-    if(!this.targets.findTarget('sign_in')){ // user signed in hidden link_to sign_in target
-      return;
-    }
-
     let women_list = document.getElementsByClassName('women-list');
     let men_list = document.getElementsByClassName('men-list');
     let shopping_cart = document.getElementsByClassName('shopping-cart');
@@ -16,7 +12,7 @@ export default class extends Controller {
     toggle(this.peopleTargets[0], women_list);
     toggle(this.peopleTargets[1], men_list);
     toggle(this.cartTarget, shopping_cart);
-    toggle(this.sign_inTarget, form_login);
+    this.targets.findTarget('sign_in') && toggle(this.sign_inTarget, form_login); // user signed in hidden link_to sign_in target
 
     function toggle(target, element) {
       target.addEventListener("click", function(){
