@@ -1,4 +1,4 @@
-  <div class="max-w-sm w-full p-5">
+  <div class="max-w-sm w-full p-5" data-controller="item">
     <div class="card flex flex-col justify-center p-7 bg-white rounded-lg shadow-2xl">
       <div class="prod-title">
         <p class="text-2xl capitalize text-gray-900 font-bold truncate"><%= link_to product.name, product %></p>
@@ -35,9 +35,7 @@
         </div>
         <div class="flex flex-col md:flex-row justify-between items-center text-gray-900">
           <p class="font-bold text-xl"><%= product.price %> $</p>
-          <button
-            class="px-6 py-2 transition ease-in duration-200 capitalize rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none">Add
-          to cart</button>
+          <%= link_to "add to cart", add_to_cart_path(product_id: product.id, action: Product::ACTION_ADD), data: {action: "click->item#addToCart" },class: "px-6 py-2 transition ease-in duration-200 capitalize rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none add-to-cart"%>
         </div>
       </div>
     </div>

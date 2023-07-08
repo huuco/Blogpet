@@ -15,7 +15,8 @@
     <%= render "layouts/header" %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-    <%= render "shared/cart" %>
+
+    <%= render "shared/cart", product_carts: @product_carts %>
     <%= render "shared/login" %>
     
     <main class="container px-4 z-0">
