@@ -4,7 +4,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "products#index"
-  resources :products
+  resources :products do
+    member do
+      post "/likes", to: "likes#create"
+      delete "/likes", to: "likes#destroy"
+      # resources :comments, only: [:create]
+    end
+  end
   resources :checkouts
   resources :carts, only: [:index]
   get "add_to_cart/", to: "carts#add"

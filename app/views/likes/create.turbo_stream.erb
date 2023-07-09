@@ -1,0 +1,6 @@
+<%= turbo_stream.update "product_#{@product.id}_like" do %>
+  <%= render partial: "likes/like", locals: {product: @product, user: current_user}%>
+<% end %>
+<%= turbo_stream.update "product_#{ @product.id }_like_count" do %>
+  <%= render partial: "likes/count", locals: { count: @product.likes.count } %>
+<% end %>

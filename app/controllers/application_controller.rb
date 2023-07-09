@@ -37,4 +37,10 @@ class ApplicationController < ActionController::Base
 
     @sub_total
   end
+
+  private
+
+  def current_user
+    @current_user ||= warden.authenticate(scope: :user)
+  end
 end
