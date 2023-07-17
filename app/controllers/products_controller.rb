@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
   end
 
   def show
-    
+    @reviews = @product.reviews.order_by_created_at_desc.order_by_id_desc
   end
 
   private

@@ -1,5 +1,5 @@
 <!-- component -->
-<section class="text-gray-700 body-font overflow-hidden bg-white" id="product_detail">
+<section class="text-gray-700 body-font overflow-hidden bg-white " id="product_detail">
   <div class="container px-5 py-24 mx-auto">
     <div class="lg:w-4/5 mx-auto flex flex-wrap">
       <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src="https://www.whitmorerarebooks.com/pictures/medium/2465.jpg">
@@ -7,23 +7,8 @@
         <h2 class="text-sm title-font text-gray-500 tracking-widest">BRAND NAME</h2>
         <h1 class="text-gray-900 text-3xl title-font font-medium mb-1"><%= @product.name %></h1>
         <div class="flex mb-4">
-          <span class="flex items-center">
-            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <span class="text-gray-600 ml-3">4 Reviews</span>
+          <span class="flex items-center" id="reviewer_number">
+            <span class="text-gray-600 ml-3"><%= @product.reviews.count(:user_id) %> Reviews</span>
           </span>
           <span class="flex ml-3 pl-3 py-2 border-l-2 border-gray-200">
             <a class="text-gray-500">
@@ -70,15 +55,85 @@
         </div>
         <div class="flex">
           <span class="title-font font-medium text-2xl text-gray-900">$<%= @product.price %></span>
-            <div id="product_<%= @product.id %>_like">
-              <%= render "likes/like", product: @product, user: current_user %>
-            </div>
-            <div id="product_<%= @product.id %>_like_count" class="mt-2 text-gray-600 mr-3">
-              <%= render "likes/count", count: @product.likes.count %>
-            </div>
-           <%= link_to "add to cart", add_to_cart_path(product_id: @product.id, action: Product::ACTION_ADD), class: "px-6 py-2 transition ease-in duration-200 capitalize rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none"%>
+          <div id="product_<%= @product.id %>_like">
+            <%= render "likes/like", product: @product, user: current_user %>
+          </div>
+          <div id="product_<%= @product.id %>_like_count" class="mt-2 text-gray-600 mr-3">
+            <%= render "likes/count", count: @product.likes.count %>
+          </div>
+          <%= link_to "add to cart", add_to_cart_path(product_id: @product.id, action: Product::ACTION_ADD), class: "px-6 py-2 transition ease-in duration-200 capitalize rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none"%>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+<hr>
+<section class="text-gray-700 body-font overflow-hidden bg-white" id="product_reviews">
+  <div class="container px-5 py-24 mx-auto">
+  <div class="lg:w-4/5  flex flex-wrap">
+  </div>
+  <div class="flex flex-row">
+  <div class="w-6/12" id="statistic_star">
+    <%= render partial: "statistic", locals: {product: @product} %>
+  </div>
+  <div class="w-full" data-controller="star-bar" data-star-bar-hover-class="fill-yellow-500 stroke-yellow-500" data-action="turbo:submit-end->star-bar#reset">
+    <%= form_for Review.new, url: reviews_path(@product) do |f|%>
+    <div class="flex items-center mb-1">
+      <% Review::RATING_TITLES.map do |star, title|%>
+      <svg 
+        class="w-4 h-4 text-gray-300 mr-1 hover:text-yellow-300" 
+        data-star-bar-target="star" 
+        data-star-bar-star-index-param="<%= star.to_i + 1 %>"
+        data-action="pointerenter->star-bar#enter pointerleave->star-bar#leave click->star-bar#rating"
+        aria-hidden="true" 
+        xmlns="http://www.w3.org/2000/svg" 
+        fill="currentColor" 
+        viewBox="0 0 22 20">
+        <title><%= title %></title>
+        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+      </svg>
+      <% end %>
+      <%= f.hidden_field :rating, value: "0" %>
+    </div>
+    <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+      <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
+        <label for="comment" class="sr-only">Your comment</label>
+        <%= f.label :content, "Your comment", class: "sr-only"%>
+        <%= f.text_area :content, id: "comment", class: "w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400", placeholder: "Write a comment...", required: true, rows: 4 %>
+      </div>
+      <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
+        <%= f.button type: :submit, title: "Send message", class: "inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600 submit-review" do %>
+        <svg class="w-5 h-5 rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+          <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z"/>
+        </svg>
+        <span class="sr-only">Send message</span>
+        <%end%>
+        <div class="flex pl-0 space-x-1 sm:pl-2">
+          <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
+              <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"/>
+            </svg>
+            <span class="sr-only">Attach file</span>
+          </button>
+          <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+              <path d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
+            </svg>
+            <span class="sr-only">Set location</span>
+          </button>
+          <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+              <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+            </svg>
+            <span class="sr-only">Upload image</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <%end%>
+    <hr>
+    <div id="list_reviews_product_<%= @product.id %>">
+      <%= @reviews && render("reviews/review", reviews: @product.reviews) %>
     </div>
   </div>
 </section>

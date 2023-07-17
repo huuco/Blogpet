@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       post "/likes", to: "likes#create"
       delete "/likes", to: "likes#destroy"
       # resources :comments, only: [:create]
+      resources :reviews
     end
   end
   resources :checkouts

@@ -44,8 +44,7 @@
                   <div class="flow-root">
                     <ul role="list" class="-my-6 divide-y divide-gray-200">
                       <%= turbo_frame_tag "product_item_frame" do %>
-                       
-                          <%= render "shared/product_item", product_carts: @product_carts %>
+                        <%= render "shared/product_item", product_carts: @product_carts %>
                       <% end %>
                       <!-- More products... -->
                     </ul>

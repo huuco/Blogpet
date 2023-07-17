@@ -1,0 +1,11 @@
+<%= turbo_stream.update "list_reviews_product_#{@product.id}" do %>
+  <%= @product.reviews && render(partial: "reviews/review", locals: {reviews: @product.reviews })%>
+<% end %>
+
+<%= turbo_stream.update "statistic_star" do %>
+  <%= render(partial: "products/statistic", locals: { product: @product }) %>
+<%end%>
+
+<%= turbo_stream.update "reviewer_number" do %>
+  <span class="text-gray-600 ml-3"><%= @product.reviews.count(:user_id) %> Reviews</span>
+<% end %>
