@@ -8,9 +8,9 @@
       </div>
     </div>
     <div class="flex items-center mb-1">
-      <% review&.rating.times do |star|%>
+      <% (1..Review::MAX_RATING).to_a.each do |star|%>
         <svg 
-          class="w-4 h-4 text-gray-300 mr-1 hover:text-yellow-300 fill-yellow-400 stroke-yellow-400 %>" 
+          class="w-4 h-4 stroke-yellow-400 mr-1 hover:text-yellow-300 <%= fill_to_star(review&.rating, star) %>" 
           aria-hidden="true" 
           xmlns="http://www.w3.org/2000/svg" 
           fill="currentColor" 

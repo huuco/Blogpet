@@ -1,10 +1,6 @@
 module RatingHelper
-  def star_rating_class(product, current_user, star)
-    if star.to_i < Review.find_by(product: product, user: current_user)&.rating.to_i
-      "fill-yellow-400 stroke-yellow-400" 
-    else
-      "fill-transparent stroke-gray-400" 
-    end
+  def fill_to_star(rating, index)
+    rating - index >= 0 ? "fill-yellow-400 stroke-yellow-400" : "fill-transparent stroke-gray-400"
   end
 end
 

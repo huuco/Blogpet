@@ -34,11 +34,11 @@ class Product < ApplicationRecord
   def star
     return [0] if star_count.empty?
     [
-      (star_count.count(1)/total_star)*100,
-      (star_count.count(2)/total_star)*100,
-      (star_count.count(3)/total_star)*100,
-      (star_count.count(4)/total_star)*100,
-      (star_count.count(5)/total_star)*100
+      (star_count.count(1)*1.0/total_star)*100,
+      (star_count.count(2)*1.0/total_star)*100,
+      (star_count.count(3)*1.0/total_star)*100,
+      (star_count.count(4)*1.0/total_star)*100,
+      (star_count.count(5)*1.0/total_star)*100
     ]
   end
 
