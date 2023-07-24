@@ -35,7 +35,7 @@
         </div>
         <div class="flex flex-col md:flex-row justify-between items-center text-gray-900">
           <p class="font-bold text-xl"><%= product.price %> $</p>
-          <%= link_to "add to cart", add_to_cart_path(product_id: product.id, action: Product::ACTION_ADD), data: {action: "click->item#addToCart" },class: "px-6 py-2 transition ease-in duration-200 capitalize rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none add-to-cart"%>
+          <%= button_to "add to cart", add_to_cart_path(product_id: product.id),class: "px-6 py-2 transition ease-in duration-200 capitalize rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none add-to-cart"%>
         </div>
       </div>
     </div>

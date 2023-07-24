@@ -44,7 +44,7 @@
                   <div class="flow-root">
                     <ul role="list" class="-my-6 divide-y divide-gray-200">
                       <%= turbo_frame_tag "product_item_frame" do %>
-                        <%= render "shared/product_item", product_carts: @product_carts %>
+                        <%= render "products/product_item", product_carts: @product_carts %>
                       <% end %>
                       <!-- More products... -->
                     </ul>
@@ -53,11 +53,9 @@
               </div>
 
               <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
-                <div class="flex justify-between text-base font-medium text-gray-900">
+                <div class="flex justify-between text-base font-medium text-gray-900" id="sub_total">
                   <p>Subtotal</p>
-                  <%= turbo_frame_tag "sub_total" do %>
-                    <%=  render "shared/sub_total", sub_total: @sub_total%>
-                  <% end %>
+                  <p>$ <%=  @total %></p>
                 </div>
                 <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                 <div class="mt-6">

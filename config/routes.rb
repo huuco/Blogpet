@@ -13,7 +13,6 @@ Rails.application.routes.draw do
     end
   end
   resources :checkouts
-  resources :carts, only: [:index]
-  get "add_to_cart/", to: "carts#add"
+  post "add_to_cart/", to: "carts#add"
   delete "remove_to_cart/", to: "carts#destroy"
 end

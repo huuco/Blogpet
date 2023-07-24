@@ -1,31 +1,31 @@
 class CartsController < ApplicationController
+  before_action :set_product
+
   def add
     session[:carts] ||= {}
-    product_id = params[:product_id]
-    session[:carts][product_id] ||= 0
-    session[:carts][product_id] += 1
-
+    session[:carts][@product.id.to_s] ||= 0
+    session[:carts][@product.id.to_s] += 1
     session_cart
-    render_item_count
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to root_path }
+    end
   end
 
   def destroy
-    session[:carts].delete(params[:product_id]) if params[:product_id]
+    session[:carts].delete(@product.id.to_s)
     session_cart
 
-    render_item_count
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to root_path }
+    end
   end
 
   private
 
-  def render_item_count
-    respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.append(
-        "item_count_frame",
-        partial: "shared/item_count",
-        locals: { item_count: @item_count }
-      )}
-      format.html { redirect_back_or_to root_path }
-    end
+  def set_product
+    @product = Product.find(params[:product_id])
   end
 end

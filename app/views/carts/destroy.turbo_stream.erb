@@ -1,0 +1,14 @@
+<%= turbo_stream.update "item_count_frame" do %>
+  <span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800 text-orange-500" id="item_count">
+    <%= @item_count %>
+  </span>
+<% end %>
+
+<%= turbo_stream.update "product_item_frame" do %>
+  <%= render "products/product_item", product_carts: @product_carts %>
+<% end %>
+
+<%= turbo_stream.update "sub_total" do %>
+  <p>Subtotal</p>
+  <p>$ <%= @total %></p>
+<% end %>

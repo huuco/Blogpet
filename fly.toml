@@ -1,0 +1,10 @@
+app = "BlogPet"
+primary_region = "ord"
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  RAILS_ENV = "production"
+  RAILS_MASTER_KEY = "<your-rails-master-key>"
+  SECRET_KEY_BASE = "<your-secret-key-base>"
+  DATABASE_URL = "postgresql://your-db-username:your-db-password@your-db-host:5432/your-db-name"
