@@ -4,9 +4,6 @@ let beforeValue = 0;
 export default class extends Controller {
   static targets = ['star']
   static classes = ['hover']
-  connect(){
-    
-  }
 
   reset() {
     this._clearToStar();

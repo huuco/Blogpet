@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = ['people', 'cart', 'sign_in', 'sign_up', 'logout']
     
   connect() {
-    console.log("HeaderController");
     let women_list = document.getElementsByClassName('women-list');
     let men_list = document.getElementsByClassName('men-list');
     let form_login = document.getElementsByClassName('body-form-login');

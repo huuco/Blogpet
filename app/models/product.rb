@@ -15,11 +15,11 @@ class Product < ApplicationRecord
   end
 
   def like(user)
-    !liked?(user) && likes << Like.new(user: user)
+    likes << Like.new(user: user) unless liked?(user)
   end
 
   def unlike(user)
-    liked?(user) && likes.find_by(user: user).destroy
+    likes.find_by(user: user).destroy if liked?(user)
   end
 
 

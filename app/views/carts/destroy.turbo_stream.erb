@@ -5,7 +5,7 @@
 <% end %>
 
 <%= turbo_stream.update "product_item_frame" do %>
-  <%= render "products/product_item", product_carts: @product_carts %>
+  <%= render "carts/item", product_carts: @product_carts %>
 <% end %>
 
 <%= turbo_stream.update "sub_total" do %>
