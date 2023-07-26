@@ -1,13 +1,10 @@
-  <div class="max-w-sm w-full p-5" data-controller="item">
+  <div class="max-w-[17%] p-2 w-full cursor-pointer" data-controller="item">
     <div class="card flex flex-col justify-center p-7 bg-white rounded-lg shadow-2xl" >
-      <div class="prod-title">
-        <p class="text-2xl capitalize text-gray-900 font-bold truncate"><%= link_to product.name, product %></p>
-        <p class="capitalize text-sm text-gray-400">
-          The best shoes in the marketplace
-        </p>
-      </div>
       <div class="prod-img" title="<%= product.description %>">
         <%= link_to image_tag("https://unsplash.com/photos/IJjfPInzmdk/download?force=true&w=1920", class: "w-full object-cover object-center"), product%>
+      </div>
+      <div class="prod-title">
+        <p class="text-xs capitalize text-gray-900 font-bold truncate"><%= link_to product.name, product %></p>
       </div>
       <div class="prod-info grid gap-10">
         <div class="flex items-center">
@@ -33,10 +30,11 @@
           </svg>
           <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">5.0</span>
         </div>
+
         <div class="flex flex-col md:flex-row justify-between items-center text-gray-900">
           <p class="font-bold text-xl"><%= product.price %> $</p>
-          <%= button_to "add to cart", add_to_cart_path(product_id: product.id),class: "px-6 py-2 transition ease-in duration-200 capitalize rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none add-to-cart"%>
         </div>
       </div>
+
     </div>
   </div>
