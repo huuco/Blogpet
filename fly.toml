@@ -1,10 +1,52 @@
-app = "BlogPet"
-primary_region = "ord"
+# fly.toml app configuration file generated for blogpet on 2023-08-11T17:09:34+07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "blogpet"
+primary_region = "hkg"
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+
+[experimental]
+  auto_rollback = true
+
 [build]
   dockerfile = "Dockerfile"
 
+[deploy]
+  release_command = "bin/rails db:prepare"
+
 [env]
+  DATABASE_URL = "postgres://postgres:eFcFQtjjBRuYt0a@blogpet-db.flycast:5432"
+  PORT = "4000"
+  POSTGRES_DB_PROD = "blogpet_production"
+  POSTGRES_HOST_PROD = "blogpet-db.internal"
+  POSTGRES_PASSWORD_PROD = "eFcFQtjjBRuYt0a"
+  POSTGRES_USER_PROD = "postgres"
   RAILS_ENV = "production"
-  RAILS_MASTER_KEY = "<your-rails-master-key>"
-  SECRET_KEY_BASE = "<your-secret-key-base>"
-  DATABASE_URL = "postgresql://your-db-username:your-db-password@your-db-host:5432/your-db-name"
+  SEVER_COMMAND = "bundle exec puma -c config/puma.rb"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 4000
+  processes = ["app"]
+
+  [[services.ports]]
+    port = "80"
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = "443"
+    handlers = ["tls", "http"]
+
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.tcp_checks]]
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "1s"

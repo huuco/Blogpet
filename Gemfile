@@ -75,3 +75,7 @@ gem "devise"
 gem "faker"
 gem "pry"
 gem "inline_svg"
+gem 'active_model_serializers'
+gem "grape"
+gem "grape-active_model_serializers"
+gem "grape_on_rails_routes"
