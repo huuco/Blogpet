@@ -2,7 +2,7 @@ class Like < ApplicationRecord
   belongs_to :likeable, polymorphic: true
   belongs_to :user
 
-# like/unlie
+# like/unlike
   after_create_commit do
     broadcast_update_to "product_detail",
     target: "product_#{likeable.id }_like",
@@ -18,17 +18,17 @@ class Like < ApplicationRecord
   end
 
 # like count
-  after_create_commit do
-    broadcast_update_to "product_detail",
-    target: "product_#{likeable.id }_like_count",
-    partial: "likes/count",
-    locals: { count: likeable.likes.count }
-  end
+  # after_create_commit do
+  #   broadcast_update_to "product_detail",
+  #   target: "product_#{likeable.id }_like_count",
+  #   partial: "likes/count",
+  #   locals: { count: likeable.likes.count }
+  # end
 
-  after_destroy_commit do
-    broadcast_update_to "product_detail",
-    target: "product_#{likeable.id}_like_count",
-    partial: "likes/count",
-    locals: { count: likeable.likes.count  }
-  end
+  # after_destroy_commit do
+  #   broadcast_update_to "product_detail",
+  #   target: "product_#{likeable.id}_like_count",
+  #   partial: "likes/count",
+  #   locals: { count: likeable.likes.count  }
+  # end
 end

@@ -11,7 +11,7 @@ class Product < ApplicationRecord
   validates :quantity, presence: true
 
   def liked?(user)
-    likes.pluck(:user_id).include?(user.id)
+    likes.find_by(user: user).present?
   end
 
   def like(user)
