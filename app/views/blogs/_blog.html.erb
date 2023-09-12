@@ -1,0 +1,39 @@
+<article class="flex flex-col md:w-full h-full py-6 md:p-8 bg-white md:focus-within:ring ring-violet-300 md:hover:shadow-violet md:focus-within:shadow-violet transition-all relative rounded-2xl md:shadow-sm-violet">
+  
+  <img src="assets/<%= ['ghosts.png', 'lergs-cover.webp', 'tedious-survey.webp', 'free-postgres.webp', 'starry-containers.webp', 'litefs-cover.webp'].sample %>" class="max-w-full md:max-w-none h-64 object-cover md:-mx-6 md:-mt-6 mb-8 rounded-xl" alt="" loading="lazy">
+
+  <span class="flex items-center justify-between w-full text-[11px] font-bold uppercase tracking-wider text-gray-400">
+      <span class="truncate">
+        By Sam Ruby
+      </span>
+      <div class="flex-1 bg-gray-100 flex-1 h-px mx-2"></div>
+      <span class=" xs:block">
+        5 min Read
+      </span>
+  </span>
+  <h1 class="font-heading text-[1.4rem] font-semibold text-navy my-4">
+    Multiple Logs for Resiliency
+  </h1>
+  <p class="text-base line-clamp-3 mb-5">
+    You’ve done everything right.  You are well aware of
+Murphy’s Law.
+You have multiple redundant machines.  You’ve set up
+a regular back up schedule for your database, perhaps even are using
+LiteFS CLoud.  You
+ship your logs to
+LogTail or perhaps some o
+  </p>
+  <p aria-hidden="" class="text-violet-500 font-semibold mt-auto">
+    Read more 
+<svg role="img" class="inline-flex opacity-50" style="pointer-events: none; width: 20px; height: auto;" viewBox="0 0 20 20" fill="currentColor">
+  <g bufferred-rendering="static">
+    <path d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"></path>
+  </g>
+</svg>
+  </p>
+  <a href="/blog/redundant-logs/" class="opacity-0 absolute inset-0">
+    <span class="sr-only">
+      Read more
+    </span>
+  </a>
+</article>

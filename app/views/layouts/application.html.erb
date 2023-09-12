@@ -11,16 +11,14 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="bg-white <%= request.path == "/blogs" ? 'relative w-full h-full bg-white md:bg-violet-50 antialiased text-gray-600' : ''%>">
     <%= render "layouts/header" %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
-    <%= render "carts/cart", product_carts: @product_carts %>
-    <%= render "shared/login" %>
-    
-    <main class="container px-4 z-0">
+    <main class="<%= request.path == "/blogs" ? 'flex-1 pt-20' : 'container px-4 z-0' %>" role="<%= request.path == '/blogs' ? 'main' : '' %>">
       <%= yield %>
     </main>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <%= render "carts/cart", product_carts: @product_carts %>
+    <%= render "shared/login" %>
   </body>
 </html>
