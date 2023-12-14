@@ -42,14 +42,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_150443) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "addresses", force: :cascade do |t|
-    t.text "name"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_addresses_on_user_id"
-  end
-
   create_table "likes", force: :cascade do |t|
     t.string "likeable_type", null: false
     t.bigint "likeable_id", null: false
@@ -72,16 +64,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_150443) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string "transaction"
+    t.string "transaction_id"
     t.float "total"
-    t.integer "status"
+    t.integer "status", default: 0, null: false
+    t.text "address", null: false
     t.bigint "user_id", null: false
     t.bigint "payment_id", null: false
-    t.bigint "address_id", null: false
     t.bigint "shipping_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["address_id"], name: "index_orders_on_address_id"
     t.index ["payment_id"], name: "index_orders_on_payment_id"
     t.index ["shipping_id"], name: "index_orders_on_shipping_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
@@ -146,10 +137,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_150443) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "addresses", "users"
   add_foreign_key "order_details", "orders"
   add_foreign_key "order_details", "products"
-  add_foreign_key "orders", "addresses"
   add_foreign_key "orders", "payments"
   add_foreign_key "orders", "shippings"
   add_foreign_key "orders", "users"

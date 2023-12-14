@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  after_action :store_user_location!, if: :storable_location?
   before_action :session_cart
 
   def after_sign_out_path_for(resource_or_scope)
@@ -28,7 +29,14 @@ class ApplicationController < ActionController::Base
     # p ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
   end
   
+  def after_sign_in_path_for(resource_or_scope)
+    stored_location_for(resource_or_scope) || super
+  end
   private
+
+  def set_redirect_path
+    @redirect_path = request.path
+  end
 
   def total_cart
     @total = 0
@@ -43,4 +51,12 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= warden.authenticate(scope: :user)
   end
+
+  def storable_location?
+    request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
+   end
+ 
+   def store_user_location!
+     store_location_for(:user, request.fullpath)
+   end
 end
