@@ -13,7 +13,11 @@ Rails.application.routes.draw do
     end
   end
   resources :checkouts
-  resources :blogs
+  resources :blogs do
+    member do
+      post "/vote", to: "votes#create"
+    end
+  end
   post "add_to_cart/", to: "carts#add"
   delete "remove_to_cart/", to: "carts#destroy"
 end

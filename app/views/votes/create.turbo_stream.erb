@@ -1,0 +1,6 @@
+<%= turbo_stream.update "downvote_#{@blog.id}" do %>
+  <%= render partial: "downvote", locals: { blog: @blog, user: current_user } %>
+<% end %>
+<%= turbo_stream.update "upvote_#{@blog.id}" do %>
+  <%= render partial: "upvote", locals: { blog: @blog, user: current_user } %>
+<% end %>
