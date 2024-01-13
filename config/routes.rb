@@ -13,7 +13,15 @@ Rails.application.routes.draw do
     end
   end
   resources :checkouts
+  resources :comments do
+    resources :comments
+  end
   resources :blogs do
+    resources :comments do
+      member do
+        get :reply
+      end
+    end
     member do
       post "/vote", to: "votes#create"
     end

@@ -54,8 +54,8 @@
             <p class="ml-1.5 font-medium text-base sm:text-sm">0</p>
           </div>
           <!---->
-          <div class="flex items-center">
-            <button class="ml-6 msmd:ml-3 sm:ml-4">
+          <div class="flex items-center" data-controller="comment">
+            <button class="ml-6 msmd:ml-3 sm:ml-4" data-action="click->comment#show">
               <div class="sm:w-5 sm:h-5 flex sm:items-center">
                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                 <svg width="22" height="22" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -67,8 +67,8 @@
             <p class="ml-1.5 font-medium text-base sm:text-sm">0</p>
           </div>
         </div>
-        <div class="flex font-medium text-xs text-slate-400 flex-wrap content-around xs:mt-4 sm:justify-end">
-          <button class="flex hover:underline">
+        <div data-controller="answer" class="flex font-medium text-xs text-slate-400 flex-wrap content-around xs:mt-4 sm:justify-end">
+          <button class="flex hover:underline" data-action="click->answer#show">
             <!---->
             <p class="ml-1">1</p>
             <p class="ml-1">Answer</p>
@@ -83,6 +83,9 @@
           </g>
         </svg>
       </p>
+      <div id="comments_blog_<%= @blog.id %>">
+        <%= render partial: "comments/widget", locals: {commentable: @blog} %>
+      </div>
     </article>
   </div>
 </section>

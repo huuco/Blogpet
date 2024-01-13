@@ -1,0 +1,9 @@
+<div class="comment-form">
+<%= form_for [comment.commentable, comment] do |f|%>
+  <%= f.hidden_field :parent_id %>
+  <%= f.text_area :content, class: "form-control", placeholder: (f.object.parent_id.nil? ? 'Share your idea.' : 'Leave your reply.')%>
+  <span class="comment_chars_counter" id="comment_<%= comment.persisted? ? comment.id : 'new'%>_chars_counter">Remaining : 255</span>
+  <div class="float-right">
+    <%= f.submit comment.new_record? ? "Comment" : "Change", class: 'btn btn-primary btn-sm float-xs-right' %>
+  </div>
+<%end%>
