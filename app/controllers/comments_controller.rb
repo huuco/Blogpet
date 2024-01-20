@@ -8,7 +8,6 @@ class CommentsController < ApplicationController
     @comment.save
     # @commentable.reload if using commentable.comments.size and remove cache
     # using count, query directly db, size using cache
-    @comment_parents = @commentable.comments.where(parent_id: nil).order(created_at: :desc)
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to @commentable }

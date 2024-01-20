@@ -1,17 +1,46 @@
-<li class="comment" id="comment_<%= comment.id%>">
-    <div class="avatar">
-        <%= image_tag "whale.jpg",class: "w-10 h-10 rounded-full" %>
+<%if comment.parent %>
+<li class="comment children" id="comment_<%= comment.id%>" style="margin-left: 30px;">
+  <div class="avatar" >
+    <%= image_tag "#{[2,4].sample}.jpg",class: "w-10 h-10 rounded-full" %>
+  </div>
+  <div class="comment-content" >
+    <%= comment.content %>
+  </div>
+  <div class="comment-info" id="comment_info_<%= comment.id %>">
+    <small>
+      <p ><%= comment.user_username%></p>
+      <p ><%= localize(comment.created_at, format: :long) %></p>
+      <p data-controller="reply"><button type="button" data-comment-id="<%= comment.id %>" data-action="click->reply#showForm">reply</button>
+      </p>
+    </small>
+    <div class="comment-form hidden" id="comment_reply_<%= comment.id%>">
+      <%= render "comments/form", comment: Comment.new(parent: comment, commentable: comment.commentable) %>
     </div>
-    <div class="comment-content">
-        <%= comment.content %>
-    </div>
-    <div class="comment-info">
-        <small>
-            <p><%= comment.user_username%></p>
-            <p><%= localize(comment.created_at, format: :long) %></p> •
-        </small>
-        <% if comment.replies.any? %>
-            <%= render comment.replies %>
-        <% end %>
-    </div>
+  </div>
+  <ul style="margin-left: 30px;">
+    <%= render comment.replies.order(created_at: :desc) if comment.replies.any? %>
+  </ul>
 </li>
+<%else%>
+<li class="comment" id="comment_<%= comment.id%>" >
+  <div class="avatar" >
+    <%= image_tag "#{[2,4].sample}.jpg",class: "w-10 h-10 rounded-full" %>
+  </div>
+  <div class="comment-content" >
+    <%= comment.content %>
+  </div>
+  <div class="comment-info" id="comment_info_<%= comment.id %>">
+    <small>
+      <p><%= comment.user_username %>&ensp;<%= localize(comment.created_at, format: :long) %></p>
+      <p data-controller="reply"><button type="button" data-comment-id="<%= comment.id %>" data-action="click->reply#showForm">reply</button>
+      </p>
+    </small>
+    <div class="comment-form hidden" id="comment_reply_<%= comment.id%>">
+      <%= render "comments/form", comment: Comment.new(parent: comment, commentable: comment.commentable) %>
+    </div>
+    <div class="comment-reply-<%= comment.replies.any? %>">
+      <%= render comment.replies.order(created_at: :desc) if comment.replies.any? %>
+    </div>
+  </div>
+</li>
+<%end%>

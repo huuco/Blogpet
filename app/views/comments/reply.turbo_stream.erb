@@ -1,0 +1,3 @@
+<%= turbo_stream.update "comment_info_#{@comment.id}" do %>
+  <%= render partial: "comments/form", locals: {comment: @reply} %>
+<%end%>
