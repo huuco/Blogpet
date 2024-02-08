@@ -6,6 +6,9 @@ class Comment < ApplicationRecord
 
   delegate :username, to: :user, prefix: true
 
+  scope :created_at_desc, -> {order(created_at: :desc)}
+  scope :children, -> {where(parent: nil)}
+
   after_create_commit do
     broadcast_update_to "blog_detail",
     target: "comments_blog_#{commentable.id}",

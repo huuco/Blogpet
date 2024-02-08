@@ -1,46 +1,113 @@
-<%if comment.parent %>
-<li class="comment children" id="comment_<%= comment.id%>" style="margin-left: 30px;">
-  <div class="avatar" >
-    <%= image_tag "#{[2,4].sample}.jpg",class: "w-10 h-10 rounded-full" %>
-  </div>
-  <div class="comment-content" >
-    <%= comment.content %>
-  </div>
-  <div class="comment-info" id="comment_info_<%= comment.id %>">
-    <small>
-      <p ><%= comment.user_username%></p>
-      <p ><%= localize(comment.created_at, format: :long) %></p>
-      <p data-controller="reply"><button type="button" data-comment-id="<%= comment.id %>" data-action="click->reply#showForm">reply</button>
-      </p>
-    </small>
-    <div class="comment-form hidden" id="comment_reply_<%= comment.id%>">
-      <%= render "comments/form", comment: Comment.new(parent: comment, commentable: comment.commentable) %>
+
+<% if !comment.parent %>
+  <div class="flex space-x-2" id="comment_<%= comment.id %>">
+    <div class="group relative flex flex-shrink-0 self-start cursor-pointer">
+      <%= image_tag comment.user.avatar, class: " h-10 w-10 object-fill rounded-full" %>
+      <img style="height: 40px; width: 40px;" class="hidden"
+        x-on:mouseover="open1 = true" x-on:mouseleave="open1 = false"
+        src="https://images.unsplash.com/photo-1507965613665-5fbb4cbb8399?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDQzfHRvd0paRnNrcEdnfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="" class="h-8 w-8 object-fill rounded-full">
+    </div>
+    <div class="flex justify-center space-x-2">
+      <div class="block">
+        <div class="flex items-center space-x-2">
+          <div class="bg-gray-100 w-[27rem] rounded-xl px-2 pb-2">
+            <div class="font-medium">
+              <a href="#" class="hover:underline text-sm">
+              <small><%= comment.user_username %></small>
+              </a>
+            </div>
+            <div class="text-xs">
+              <%= comment.content %>
+            </div>
+          </div>
+          <div class="self-stretch flex justify-center items-center transform transition-opacity duration-200 opacity-0 hover:opacity-100">
+            <a href="#" class="">
+              <div class="text-xs cursor-pointer flex h-6 w-6 transform transition-colors duration-200 hover:bg-gray-100 rounded-full items-center justify-center">
+                <svg class="w-4 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="flex justify-start items-center text-xs w-full">
+          <div class="font-semibold text-gray-700 px-2 flex items-center justify-center space-x-1">
+            <a href="#" class="hover:underline">
+            <small>Like</small>
+            </a>
+            <small class="self-center">.</small>
+            <button type="button" class="hover:underline" data-controller="reply">
+            <small data-comment-id="<%= comment.id %>" data-action="click->reply#showForm">Reply</small>
+            </button>
+            <small class="self-center">.</small>
+            <a href="#" class="hover:underline">
+            <small><%= time_ago_in_words comment.created_at %> ago.</small>
+            </a>
+          </div>
+        </div>
+        <div class="comment form hidden" id="comment_reply_<%= comment.id %>">
+          <%= render "comments/form", comment: Comment.new(parent: comment, commentable: comment.commentable) %>
+        </div>
+        <!-- Subcomment Sample -->
+        <%=  render comment.replies.created_at_desc if comment.replies.any? %>
+        <!-- New Subcomment Paste Here !! -->
+      </div>
     </div>
   </div>
-  <ul style="margin-left: 30px;">
-    <%= render comment.replies.order(created_at: :desc) if comment.replies.any? %>
-  </ul>
-</li>
 <%else%>
-<li class="comment" id="comment_<%= comment.id%>" >
-  <div class="avatar" >
-    <%= image_tag "#{[2,4].sample}.jpg",class: "w-10 h-10 rounded-full" %>
-  </div>
-  <div class="comment-content" >
-    <%= comment.content %>
-  </div>
-  <div class="comment-info" id="comment_info_<%= comment.id %>">
-    <small>
-      <p><%= comment.user_username %>&ensp;<%= localize(comment.created_at, format: :long) %></p>
-      <p data-controller="reply"><button type="button" data-comment-id="<%= comment.id %>" data-action="click->reply#showForm">reply</button>
-      </p>
-    </small>
-    <div class="comment-form hidden" id="comment_reply_<%= comment.id%>">
-      <%= render "comments/form", comment: Comment.new(parent: comment, commentable: comment.commentable) %>
+  <div class="flex space-x-2" id="comment_<%= comment.id %>">
+    <div class="group relative flex flex-shrink-0 self-start cursor-pointer">
+      <%= image_tag comment.user.avatar, class: " h-10 w-10 object-fill rounded-full" %>
+      <img style="height: 40px; width: 40px;"
+        x-on:mouseover="open1 = true" x-on:mouseleave="open1 = false"
+        src="https://images.unsplash.com/photo-1507965613665-5fbb4cbb8399?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDQzfHRvd0paRnNrcEdnfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="" class="hidden h-8 w-8 object-fill rounded-full">
     </div>
-    <div class="comment-reply-<%= comment.replies.any? %>">
-      <%= render comment.replies.order(created_at: :desc) if comment.replies.any? %>
+    <div class="flex justify-center space-x-2">
+      <div class="block">
+        <div class="flex  items-center space-x-2 ">
+          <div class="bg-gray-100 w-[27rem] rounded-xl px-2 pb-2">
+            <div class="font-medium">
+              <a href="#" class="hover:underline text-sm">
+              <small><%= comment.user_username %></small>
+              </a>
+            </div>
+            <div class="text-xs">
+              <%= comment.content %>
+            </div>
+          </div>
+          <div class="self-stretch flex justify-center items-center transform transition-opacity duration-200 opacity-0 hover:opacity-100">
+            <a href="#" class="">
+              <div class="text-xs cursor-pointer flex h-6 w-6 transform transition-colors duration-200 hover:bg-gray-100 rounded-full items-center justify-center">
+                <svg class="w-4 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="flex justify-start items-center text-xs w-full">
+          <div class="font-semibold text-gray-700 px-2 flex items-center justify-center space-x-1">
+            <a href="#" class="hover:underline">
+            <small>Like</small>
+            </a>
+            <small class="self-center">.</small>
+            <button type="button" class="hover:underline" data-controller="reply">
+            <small data-comment-id="<%= comment.id %>" data-action="click->reply#showForm">Reply</small>
+            </button>
+            <small class="self-center">.</small>
+            <a href="#" class="hover:underline">
+            <small><%= time_ago_in_words comment.created_at %> ago.</small>
+            </a>
+          </div>
+        </div>
+        <div class="comment form hidden" id="comment_reply_<%= comment.id %>">
+          <%= render "comments/form", comment: Comment.new(parent: comment, commentable: comment.commentable) %>
+        </div>
+        <!-- Subcomment Sample -->
+        <%=  render comment.replies.created_at_desc if comment.replies.any? %>
+        <!-- New Subcomment Paste Here !! -->
+      </div>
     </div>
   </div>
-</li>
-<%end%>
+<% end %>
+<!-- New Comment Paste Here -->

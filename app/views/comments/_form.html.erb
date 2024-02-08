@@ -1,9 +1,25 @@
-<div class="comment-form">
+
 <%= form_for [comment.commentable, comment] do |f|%>
   <%= f.hidden_field :parent_id %>
-  <%= f.text_area :content, class: "form-control", placeholder: (f.object.parent_id.nil? ? 'Share your idea.' : 'Leave your reply.')%>
-  <span class="comment_chars_counter" id="comment_<%= comment.persisted? ? comment.id : 'new'%>_chars_counter">Remaining : 255</span>
-  <div class="float-right">
-    <%= f.submit comment.new_record? ? "Comment" : "Change", class: 'btn btn-primary btn-sm float-xs-right' %>
+  <div class="flex space-x-2 space-y-2">
+    <div class="group relative flex flex-shrink-0 self-start cursor-pointer pt-2">
+    <%= image_tag  "2.jpg" , class: " h-10 w-10 object-fill rounded-full" %>
+      <img style="height: 40px; width: 40px;"
+        x-on:mouseover="open2 = true" x-on:mouseleave="open2 = false"
+        src="https://images.unsplash.com/photo-1610156830615-2eb9732de349?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDExfHJuU0tESHd3WVVrfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="" class="hidden h-8 w-8 object-fill rounded-full">
+    </div>
+    <div class="flex items-center justify-center space-x-2">
+      <div class="block">
+        <div class=" bg-gray-100  rounded-xl px-2 pb-2 w-full">
+          <div class="font-medium">
+            <a href="#" class="hover:underline text-sm">
+            <small><%=  %></small>
+            </a>
+          </div>
+          <%= f.text_area :content,class: "w-full text-sm outline-none border-gray-300  resize-none border rounded-lg placeholder:text-sm", placeholder: (f.object.parent_id.nil? ? 'Share your idea.' : 'Leave your reply.')%>
+        </div>
+          <%= f.submit comment.new_record? ? "Comment" : "Change", class: 'btn btn-primary btn-sm float-xs-right' %>
+      </div>
+    </div>
   </div>
 <%end%>

@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= warden.authenticate(scope: :user)
+    @current_user ||= warden&.authenticate(scope: :user)
   end
 
   def storable_location?
