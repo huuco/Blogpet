@@ -11,9 +11,23 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-white <%= request.path == "/blogs" ? 'relative w-full h-full bg-white md:bg-violet-50 antialiased text-gray-600' : ''%>">
+  <% if controller_name == "blogs" && action_name == "show" %>
+    <% class_name = "container mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20" %>
+    <% role = "main" %>
+    <% class_name_body = "relative w-full h-full antialiased text-gray-600" %>
+  <% elsif controller_name == "blogs" && action_name == "index" %>
+    <% class_name = "flex-1 pt-20" %>
+    <% role = "main" %>
+    <% class_name_body = "relative w-full h-full bg-white md:bg-violet-50 antialiased text-gray-600" %>
+  <% else %>
+    <% class_name = "container px-4 z-0" %>
+    <% role = "" %>
+    <% class_name_body = "" %>
+  <% end %>
+
+  <body class="bg-white <%= class_name_body %>">
     <%= render "layouts/header" %>
-    <main class="<%= request.path == "/blogs" ? 'flex-1 pt-20' : 'container px-4 z-0' %>" role="<%= request.path == '/blogs' ? 'main' : '' %>">
+    <main role="<%= role %>"  class="<%= class_name %>" >
       <%= yield %>
     </main>
     <p class="notice"><%= notice %></p>

@@ -4,21 +4,13 @@
   <div class="flex space-x-2 space-y-2">
     <div class="group relative flex flex-shrink-0 self-start cursor-pointer pt-2">
     <%= image_tag  "2.jpg" , class: " h-10 w-10 object-fill rounded-full" %>
-      <img style="height: 40px; width: 40px;"
-        x-on:mouseover="open2 = true" x-on:mouseleave="open2 = false"
-        src="https://images.unsplash.com/photo-1610156830615-2eb9732de349?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDExfHJuU0tESHd3WVVrfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="" class="hidden h-8 w-8 object-fill rounded-full">
     </div>
     <div class="flex items-center justify-center space-x-2">
       <div class="block">
-        <div class=" bg-gray-100  rounded-xl px-2 pb-2 w-full">
-          <div class="font-medium">
-            <a href="#" class="hover:underline text-sm">
-            <small><%=  %></small>
-            </a>
-          </div>
-          <%= f.text_area :content,class: "w-full text-sm outline-none border-gray-300  resize-none border rounded-lg placeholder:text-sm", placeholder: (f.object.parent_id.nil? ? 'Share your idea.' : 'Leave your reply.')%>
+        <div class="rounded-xl px-2">
+          <%= f.text_area :content, id: "" , class: "w-fit w-[25rem] text-sm outline-none border-gray-300  resize-none border rounded-lg placeholder:text-sm", placeholder: (f.object.parent_id.nil? ? 'Share your idea.' : 'Leave your reply.')%>
         </div>
-          <%= f.submit comment.new_record? ? "Comment" : "Change", class: 'btn btn-primary btn-sm float-xs-right' %>
+          <%= f.submit comment.new_record? ? "Comment" : "Change", class: 'inline-flex items-center py-2.5 px-4 text-xs cursor-pointer  text-center font-bold bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800' %>
       </div>
     </div>
   </div>

@@ -1,91 +1,179 @@
-<section class="container mx-auto pt-20 px-4 sm:px-6 md:px-8" id="blog_detail">
-  <div class="grid lg:grid-cols-2 xl:grid-cols-2 gap-1 items-start md:-mt-20 mb-24">
-  <article class="flex flex-col md:w-full h-full py-6 md:p-8 bg-white md:focus-within:ring ring-violet-300 md:hover:shadow-violet md:focus-within:shadow-violet transition-all relative rounded-2xl md:shadow-sm-violet"></article>
-    <article class="flex flex-col md:w-full h-full py-6 md:p-8 bg-white md:focus-within:ring ring-violet-300 md:hover:shadow-violet md:focus-within:shadow-violet transition-all relative rounded-2xl md:shadow-sm-violet">
-      <%= image_tag "#{['ghosts.png', 'lergs-cover.webp', 'tedious-survey.webp', 'free-postgres.webp', 'starry-containers.webp', 'litefs-cover.webp'].sample }", class: "max-w-full md:max-w-none h-64 object-cover md:-mx-6 md:-mt-6 mb-8 rounded-xl", alt: "", loading: "lazy" %>
-      <span class="flex items-center justify-between w-full text-[11px] font-bold uppercase tracking-wider text-gray-400">
-        <span class="truncate">
-        By <%= @blog.username %>
+<header class="max-w-[44rem] 2xl:max-w-3xl mx-auto mb-14 sm:mb-16">
+  <div class="flex flex-wrap items-center text-xs font-bold text-navy-500 uppercase tracking-wider mb-7">
+    Reading time
+    <span class="mx-2 text-gray-300">•</span>
+    6 min
+    <span class="flex-1 bg-gray-100 flex-1 h-px mx-2"></span>
+    <a class="flex items-center justify-center w-7 h-7 hover:text-blue-500 transition-colors" href="https://twitter.com/share?text=Event Driven Machines&amp;url=https://fly.io/blog/event-driven-machines/&amp;via=flydotio" target="_blank">
+      <svg role="img" class="" viewBox="0 0 24 24" style="pointer-events: none; width: 18px; height: 18px;" fill="currentColor">
+        <g buffered-rendering="static">
+          <path d="M22.208 3.871c-.757.252-1.824.496-2.834.748-.757-.883-1.892-1.388-3.154-1.388-2.902 0-4.92 2.649-4.289 5.425-3.659-.126-6.939-1.892-9.083-4.542-1.135 1.892-.505 4.542 1.388 5.803-.757 0-1.388-.126-2.019-.505 0 2.145 1.388 4.037 3.532 4.416-.631.252-1.388.252-2.019.126.505 1.766 2.145 3.028 4.037 3.028-1.892 1.388-4.289 2.019-6.56 1.766 1.892 1.262 4.163 2.019 6.686 2.019 8.2 0 12.742-6.813 12.49-12.994.753-1.089 1.49-2.201 1.824-3.902z"></path>
+        </g>
+      </svg>
+      <span class="sr-only">Share this post on Twitter</span>
+    </a>
+    <a class="flex items-center justify-center w-7 h-7 hover:text-orange-500 transition-colors" href="http://news.ycombinator.com/submitlink?u=https://fly.io/blog/event-driven-machines/&amp;t=Event Driven Machines" target="_blank">
+      <svg role="img" class="" viewBox="0 0 24 24" style="pointer-events: none; width: 14px; height: 14px;" fill="currentColor">
+        <g buffered-rendering="static">
+          <path d="M16.063 2h4.75l-6.625 12.5v7.5h-4.126l.001-7.5-6.875-12.5h4.875l4.125 8.75 3.875-8.75z"></path>
+        </g>
+      </svg>
+      <span class="sr-only">Share this post on Hacker News</span>
+    </a>
+    <a class="flex items-center justify-center w-7 h-7 hover:text-red-500 transition-colors" href="http://www.reddit.com/submit?url=https://fly.io/blog/event-driven-machines/&amp;title=Event Driven Machines" target="_blank">
+      <svg role="img" class="" viewBox="0 0 24 24" style="pointer-events: none; width: 20px; height: 20px;" fill="currentColor">
+        <g buffered-rendering="static">
+          <path d="M15.029 14.708c-.762 0-1.401-.616-1.401-1.377 0-.762.639-1.4 1.401-1.4s1.378.638 1.378 1.4c0 .761-.616 1.377-1.378 1.377m.194 2.546c-.674.673-1.727 1-3.224 1-1.496 0-2.551-.327-3.223-1-.07-.07-.11-.165-.11-.264 0-.205.169-.374.374-.374.099 0 .194.04.265.11.524.525 1.406.781 2.694.781s2.17-.256 2.696-.781c.07-.07.165-.109.264-.109.205 0 .373.168.373.373 0 .099-.039.194-.109.264m-7.631-3.923c0-.762.639-1.4 1.4-1.4.76 0 1.377.638 1.377 1.4 0 .76-.616 1.377-1.377 1.377-.762 0-1.4-.617-1.4-1.377m14.408-1.515c-.002-1.242-1.023-2.264-2.265-2.265-.569-.002-1.118.213-1.535.6-1.495-.974-3.497-1.602-5.714-1.688l1.223-3.734 3.213.757c.002 1.022.842 1.861 1.864 1.862 1.022-.001 1.863-.842 1.865-1.864-.002-1.023-.843-1.864-1.865-1.865-.746 0-1.423.448-1.716 1.134l-3.52-.828-.008-.002-.33-.078-1.51 4.61c-2.301.043-4.386.669-5.937 1.664-.411-.364-.943-.568-1.501-.568-1.241.001-2.262 1.023-2.264 2.264 0 .786.408 1.517 1.076 1.929-.038.221-.057.445-.057.673 0 3.288 4.01 5.964 8.939 5.964s8.94-2.676 8.94-5.964c0-.212-.016-.422-.049-.629.713-.398 1.155-1.155 1.151-1.972"></path>
+        </g>
+      </svg>
+      <span class="sr-only">Share this post on Reddit</span>
+    </a>
+  </div>
+  <h1 class="h-20 relative w-full font-heading text-navy-900 leading-tight sm:leading-tight lg:leading-tight 2xl:leading-tight text-3xl sm:text-4xl lg:text-[2.75rem]">
+    <%= @blog.title %>
+  </h1>
+</header>
+<article class=" grid-cols-auto-span-auto items-start sm:text-lg leading-relaxed flex">
+  <dl class="text-sm w-52 relative top-[-6.5rem] hidden xl:block">
+    <dt class="sr-only">Author</dt>
+    <dd class="flex items-center space-x-3 mb-7">
+      <%= image_tag current_user.avatar, class: "w-10 h-10 object-cover rounded-xl" %>
+      <dl class="text-sm font-medium leading-5 whitespace-no-wrap">
+        <dt class="sr-only">Name</dt>
+        <dd class="text-navy-900">
+          Chris Fidao
+        </dd>
+      </dl>
+    </dd>
+  </dl>
+  <section class="relative max-w-[44rem] 2xl:max-w-3xl mx-auto" id="blog_detail">
+    <div class="lg:grid-cols-2 xl:grid-cols-2 gap-1 items-start md:-mt-20 mb-24">
+      <article class="flex flex-col md:w-full h-full md:p-8 bg-white md:focus-within:ring ring-violet-300 md:hover:shadow-violet md:focus-within:shadow-violet transition-all relative rounded-2xl md:shadow-sm-violet">
+        <%= image_tag "#{['ghosts.png', 'lergs-cover.webp', 'tedious-survey.webp', 'free-postgres.webp', 'starry-containers.webp', 'litefs-cover.webp'].sample }", class: "post-cover", alt: "", loading: "lazy" %>
+        <span class="flex items-center justify-between w-full text-[11px] font-bold uppercase tracking-wider text-gray-400">
+          <span class="truncate">
+          By <%= @blog.username %>
+          </span>
+          <div class="flex-1 bg-gray-100 flex-1 h-px mx-2"></div>
+          <span class=" xs:block">
+          <%= @blog.min_read %> min Read
+          </span>
         </span>
-        <div class="flex-1 bg-gray-100 flex-1 h-px mx-2"></div>
-        <span class=" xs:block">
-        <%= @blog.min_read %> min Read
-        </span>
-      </span>
-      <h1 class="font-heading text-[1.4rem] font-semibold text-navy my-4">
-        <%= @blog.title %>
-      </h1>
-      <p class="text-base line-clamp-3 mb-5">
-        <%= @blog.description %>
-      </p>
-      <div class="w-full flex justify-between mt-6 xs:flex-col">
-        <div class="flex text-slate-500 sm:justify-between">
-          <!---->
-          <div class="flex items-center">
-            <div class="sm:w-5 sm:h-5 flex sm:items-center">
-              <!----><!----><!----><!----><!----><!----><!----><!---->
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 16C13.25 16 14.3127 15.5627 15.188 14.688C16.0627 13.8127 16.5 12.75 16.5 11.5C16.5 10.25 16.0627 9.18733 15.188 8.312C14.3127 7.43733 13.25 7 12 7C10.75 7 9.68733 7.43733 8.812 8.312C7.93733 9.18733 7.5 10.25 7.5 11.5C7.5 12.75 7.93733 13.8127 8.812 14.688C9.68733 15.5627 10.75 16 12 16ZM12 14.2C11.25 14.2 10.6127 13.9373 10.088 13.412C9.56267 12.8873 9.3 12.25 9.3 11.5C9.3 10.75 9.56267 10.1123 10.088 9.587C10.6127 9.06233 11.25 8.8 12 8.8C12.75 8.8 13.3877 9.06233 13.913 9.587C14.4377 10.1123 14.7 10.75 14.7 11.5C14.7 12.25 14.4377 12.8873 13.913 13.412C13.3877 13.9373 12.75 14.2 12 14.2ZM12 19C9.56667 19 7.35 18.3207 5.35 16.962C3.35 15.604 1.9 13.7833 1 11.5C1.9 9.21667 3.35 7.39567 5.35 6.037C7.35 4.679 9.56667 4 12 4C14.4333 4 16.65 4.679 18.65 6.037C20.65 7.39567 22.1 9.21667 23 11.5C22.1 13.7833 20.65 15.604 18.65 16.962C16.65 18.3207 14.4333 19 12 19ZM12 17C13.8833 17 15.6127 16.504 17.188 15.512C18.7627 14.5207 19.9667 13.1833 20.8 11.5C19.9667 9.81667 18.7627 8.479 17.188 7.487C15.6127 6.49567 13.8833 6 12 6C10.1167 6 8.38733 6.49567 6.812 7.487C5.23733 8.479 4.03333 9.81667 3.2 11.5C4.03333 13.1833 5.23733 14.5207 6.812 15.512C8.38733 16.504 10.1167 17 12 17Z" fill="#377DFF"></path>
-              </svg>
-              <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
+        <h1 class="font-heading text-[1.4rem] font-semibold text-navy my-4">
+        </h1>
+        <p class="text-base line-clamp-3 mb-5">
+          <%= @blog.description %>
+        </p>
+        <div class="w-full flex justify-between mt-6 xs:flex-col">
+          <div class="flex text-slate-500 sm:justify-between">
+            <!---->
+            <div class="flex items-center">
+              <div class="sm:w-5 sm:h-5 flex sm:items-center">
+                <!----><!----><!----><!----><!----><!----><!----><!---->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 16C13.25 16 14.3127 15.5627 15.188 14.688C16.0627 13.8127 16.5 12.75 16.5 11.5C16.5 10.25 16.0627 9.18733 15.188 8.312C14.3127 7.43733 13.25 7 12 7C10.75 7 9.68733 7.43733 8.812 8.312C7.93733 9.18733 7.5 10.25 7.5 11.5C7.5 12.75 7.93733 13.8127 8.812 14.688C9.68733 15.5627 10.75 16 12 16ZM12 14.2C11.25 14.2 10.6127 13.9373 10.088 13.412C9.56267 12.8873 9.3 12.25 9.3 11.5C9.3 10.75 9.56267 10.1123 10.088 9.587C10.6127 9.06233 11.25 8.8 12 8.8C12.75 8.8 13.3877 9.06233 13.913 9.587C14.4377 10.1123 14.7 10.75 14.7 11.5C14.7 12.25 14.4377 12.8873 13.913 13.412C13.3877 13.9373 12.75 14.2 12 14.2ZM12 19C9.56667 19 7.35 18.3207 5.35 16.962C3.35 15.604 1.9 13.7833 1 11.5C1.9 9.21667 3.35 7.39567 5.35 6.037C7.35 4.679 9.56667 4 12 4C14.4333 4 16.65 4.679 18.65 6.037C20.65 7.39567 22.1 9.21667 23 11.5C22.1 13.7833 20.65 15.604 18.65 16.962C16.65 18.3207 14.4333 19 12 19ZM12 17C13.8833 17 15.6127 16.504 17.188 15.512C18.7627 14.5207 19.9667 13.1833 20.8 11.5C19.9667 9.81667 18.7627 8.479 17.188 7.487C15.6127 6.49567 13.8833 6 12 6C10.1167 6 8.38733 6.49567 6.812 7.487C5.23733 8.479 4.03333 9.81667 3.2 11.5C4.03333 13.1833 5.23733 14.5207 6.812 15.512C8.38733 16.504 10.1167 17 12 17Z" fill="#377DFF"></path>
+                </svg>
+                <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
+              </div>
+              <p class="ml-2.5 font-medium text-base sm:text-sm">829</p>
             </div>
-            <p class="ml-2.5 font-medium text-base sm:text-sm">829</p>
-          </div>
-          <!---->
-          <div class="flex items-center" id="upvote_<%= @blog.id %>">
-            <%= render "votes/upvote", blog: @blog, user: current_user %>
-          </div>
-          <!---->
-          <div class="flex items-center" id="downvote_<%= @blog.id %>">
-            <%= render "votes/downvote", blog: @blog, user: current_user %>
-          </div>
-          <!---->
-          <div class="flex items-center ml-6 msmd:ml-3 sm:ml-4">
-            <span>
-              <button class="">
+            <!---->
+            <div class="flex items-center" id="upvote_<%= @blog.id %>">
+              <%= render "votes/upvote", blog: @blog, user: current_user %>
+            </div>
+            <!---->
+            <div class="flex items-center" id="downvote_<%= @blog.id %>">
+              <%= render "votes/downvote", blog: @blog, user: current_user %>
+            </div>
+            <!---->
+            <div class="flex items-center ml-6 msmd:ml-3 sm:ml-4">
+              <span>
+                <button class="">
+                  <div class="sm:w-5 sm:h-5 flex sm:items-center">
+                    <svg width="24" height="24" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M2.34333 14.5908C2.44746 14.6432 2.56513 14.6693 2.68412 14.6665C2.80311 14.6636 2.91909 14.6318 3.02 14.5744L8 11.7447L12.98 14.5744C13.0809 14.6317 13.1969 14.6635 13.3158 14.6663C13.4348 14.6692 13.5524 14.643 13.6565 14.5905C13.7606 14.5381 13.8473 14.4613 13.9077 14.3681C13.9681 14.2749 14 14.1687 14 14.0605V3.1515C14 2.6693 13.7893 2.20684 13.4142 1.86587C13.0391 1.5249 12.5304 1.33334 12 1.33334H4C3.46957 1.33334 2.96086 1.5249 2.58579 1.86587C2.21071 2.20684 2 2.6693 2 3.1515V14.0605C1.99994 14.1687 2.03175 14.2749 2.09213 14.3682C2.1525 14.4614 2.23924 14.5383 2.34333 14.5908ZM3.33333 3.1515C3.33333 2.99077 3.40357 2.83662 3.5286 2.72296C3.65362 2.6093 3.82319 2.54545 4 2.54545H12C12.1768 2.54545 12.3464 2.6093 12.4714 2.72296C12.5964 2.83662 12.6667 2.99077 12.6667 3.1515V12.9696L8.35333 10.5187C8.24738 10.4585 8.12495 10.4266 8 10.4266C7.87505 10.4266 7.75262 10.4585 7.64667 10.5187L3.33333 12.9696V3.1515Z" fill="#6E6D7A"></path>
+                    </svg>
+                    <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
+                  </div>
+                </button>
+              </span>
+              <p class="ml-1.5 font-medium text-base sm:text-sm">0</p>
+            </div>
+            <!---->
+            <div class="flex items-center" data-controller="comment">
+              <button class="ml-6 msmd:ml-3 sm:ml-4" data-action="click->comment#show">
                 <div class="sm:w-5 sm:h-5 flex sm:items-center">
-                  <svg width="24" height="24" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2.34333 14.5908C2.44746 14.6432 2.56513 14.6693 2.68412 14.6665C2.80311 14.6636 2.91909 14.6318 3.02 14.5744L8 11.7447L12.98 14.5744C13.0809 14.6317 13.1969 14.6635 13.3158 14.6663C13.4348 14.6692 13.5524 14.643 13.6565 14.5905C13.7606 14.5381 13.8473 14.4613 13.9077 14.3681C13.9681 14.2749 14 14.1687 14 14.0605V3.1515C14 2.6693 13.7893 2.20684 13.4142 1.86587C13.0391 1.5249 12.5304 1.33334 12 1.33334H4C3.46957 1.33334 2.96086 1.5249 2.58579 1.86587C2.21071 2.20684 2 2.6693 2 3.1515V14.0605C1.99994 14.1687 2.03175 14.2749 2.09213 14.3682C2.1525 14.4614 2.23924 14.5383 2.34333 14.5908ZM3.33333 3.1515C3.33333 2.99077 3.40357 2.83662 3.5286 2.72296C3.65362 2.6093 3.82319 2.54545 4 2.54545H12C12.1768 2.54545 12.3464 2.6093 12.4714 2.72296C12.5964 2.83662 12.6667 2.99077 12.6667 3.1515V12.9696L8.35333 10.5187C8.24738 10.4585 8.12495 10.4266 8 10.4266C7.87505 10.4266 7.75262 10.4585 7.64667 10.5187L3.33333 12.9696V3.1515Z" fill="#6E6D7A"></path>
+                  <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
+                  <svg width="22" height="22" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00154 1.59375C8.96588 1.5932 9.9179 1.81037 10.7866 2.22907C11.6554 2.64779 12.4186 3.25726 13.0191 4.01204C13.6196 4.76683 14.0421 5.64747 14.255 6.5883C14.468 7.52915 14.4657 8.50593 14.2488 9.44583C14.0318 10.3857 13.6055 11.2645 13.0016 12.0167C12.3978 12.7689 11.632 13.3749 10.7615 13.7899C9.89083 14.2048 8.93783 14.4178 7.97346 14.4131C7.06031 14.4085 6.15927 14.2089 5.33052 13.8281L2.13651 14.4058C1.97332 14.4353 1.80686 14.3748 1.70065 14.2474C1.59444 14.12 1.56487 13.9453 1.62322 13.7901L2.53943 11.3518C1.97698 10.4334 1.65424 9.38684 1.60287 8.3085C1.5477 7.15039 1.80761 5.999 2.35491 4.97696C2.90221 3.95492 3.7164 3.10051 4.71077 2.50473C5.70509 1.90897 6.84235 1.59414 8.00141 1.59375H8.00154ZM5.03271 8.00202L5.03313 8.00344L5.03271 8.00487L5.03232 8.0056L5.03219 8.00577L5.03202 8.0059L5.03129 8.00628L5.02986 8.00671L5.02844 8.00628L5.0277 8.0059L5.02754 8.00577L5.02741 8.0056L5.02702 8.00487L5.0266 8.00344L5.02702 8.00202L5.02741 8.00128L5.02754 8.00111L5.0277 8.00098L5.02844 8.0006L5.02986 8.00017L5.03129 8.0006L5.03202 8.00098L5.03219 8.00111L5.03232 8.00128L5.03271 8.00202ZM5.02986 7.08494C4.52273 7.08494 4.11163 7.49617 4.11163 8.00344C4.11163 8.5107 4.52273 8.92193 5.02986 8.92193C5.537 8.92193 5.9481 8.5107 5.9481 8.00344C5.9481 7.49617 5.537 7.08494 5.02986 7.08494ZM8.00671 8.00344L8.00628 8.00202L8.0059 8.00128L8.00577 8.00111L8.0056 8.00098L8.00487 8.0006L8.00345 8.00017L8.00202 8.0006L8.00128 8.00098L8.00112 8.00111L8.00099 8.00128L8.0006 8.00202L8.00017 8.00344L8.0006 8.00487L8.00099 8.0056L8.00112 8.00577L8.00128 8.0059L8.00202 8.00628L8.00345 8.00671L8.00487 8.00628L8.0056 8.0059L8.00577 8.00577L8.0059 8.0056L8.00628 8.00487L8.00671 8.00344ZM7.08521 8.00344C7.08521 7.49617 7.49631 7.08494 8.00345 7.08494C8.51057 7.08494 8.92168 7.49617 8.92168 8.00344C8.92168 8.5107 8.51057 8.92193 8.00345 8.92193C7.49631 8.92193 7.08521 8.5107 7.08521 8.00344ZM10.9799 8.00202L10.9803 8.00344L10.9799 8.00487L10.9795 8.0056L10.9793 8.00577L10.9792 8.0059L10.9785 8.00628L10.977 8.00671L10.9756 8.00628L10.9749 8.0059L10.9747 8.00577L10.9746 8.0056L10.9741 8.00487L10.9738 8.00344L10.9741 8.00202L10.9746 8.00128L10.9747 8.00111L10.9749 8.00098L10.9756 8.0006L10.977 8.00017L10.9785 8.0006L10.9792 8.00098L10.9793 8.00111L10.9795 8.00128L10.9799 8.00202ZM10.977 7.08494C10.4699 7.08494 10.0588 7.49617 10.0588 8.00344C10.0588 8.5107 10.4699 8.92193 10.977 8.92193C11.4841 8.92193 11.8952 8.5107 11.8952 8.00344C11.8952 7.49617 11.4841 7.08494 10.977 7.08494Z" fill="#B8B8B8"></path>
                   </svg>
-                  <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
+                  <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                 </div>
               </button>
-            </span>
-            <p class="ml-1.5 font-medium text-base sm:text-sm">0</p>
-          </div>
-          <!---->
-          <div class="flex items-center" data-controller="comment">
-            <button class="ml-6 msmd:ml-3 sm:ml-4" data-action="click->comment#show">
-              <div class="sm:w-5 sm:h-5 flex sm:items-center">
-                <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-                <svg width="22" height="22" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00154 1.59375C8.96588 1.5932 9.9179 1.81037 10.7866 2.22907C11.6554 2.64779 12.4186 3.25726 13.0191 4.01204C13.6196 4.76683 14.0421 5.64747 14.255 6.5883C14.468 7.52915 14.4657 8.50593 14.2488 9.44583C14.0318 10.3857 13.6055 11.2645 13.0016 12.0167C12.3978 12.7689 11.632 13.3749 10.7615 13.7899C9.89083 14.2048 8.93783 14.4178 7.97346 14.4131C7.06031 14.4085 6.15927 14.2089 5.33052 13.8281L2.13651 14.4058C1.97332 14.4353 1.80686 14.3748 1.70065 14.2474C1.59444 14.12 1.56487 13.9453 1.62322 13.7901L2.53943 11.3518C1.97698 10.4334 1.65424 9.38684 1.60287 8.3085C1.5477 7.15039 1.80761 5.999 2.35491 4.97696C2.90221 3.95492 3.7164 3.10051 4.71077 2.50473C5.70509 1.90897 6.84235 1.59414 8.00141 1.59375H8.00154ZM5.03271 8.00202L5.03313 8.00344L5.03271 8.00487L5.03232 8.0056L5.03219 8.00577L5.03202 8.0059L5.03129 8.00628L5.02986 8.00671L5.02844 8.00628L5.0277 8.0059L5.02754 8.00577L5.02741 8.0056L5.02702 8.00487L5.0266 8.00344L5.02702 8.00202L5.02741 8.00128L5.02754 8.00111L5.0277 8.00098L5.02844 8.0006L5.02986 8.00017L5.03129 8.0006L5.03202 8.00098L5.03219 8.00111L5.03232 8.00128L5.03271 8.00202ZM5.02986 7.08494C4.52273 7.08494 4.11163 7.49617 4.11163 8.00344C4.11163 8.5107 4.52273 8.92193 5.02986 8.92193C5.537 8.92193 5.9481 8.5107 5.9481 8.00344C5.9481 7.49617 5.537 7.08494 5.02986 7.08494ZM8.00671 8.00344L8.00628 8.00202L8.0059 8.00128L8.00577 8.00111L8.0056 8.00098L8.00487 8.0006L8.00345 8.00017L8.00202 8.0006L8.00128 8.00098L8.00112 8.00111L8.00099 8.00128L8.0006 8.00202L8.00017 8.00344L8.0006 8.00487L8.00099 8.0056L8.00112 8.00577L8.00128 8.0059L8.00202 8.00628L8.00345 8.00671L8.00487 8.00628L8.0056 8.0059L8.00577 8.00577L8.0059 8.0056L8.00628 8.00487L8.00671 8.00344ZM7.08521 8.00344C7.08521 7.49617 7.49631 7.08494 8.00345 7.08494C8.51057 7.08494 8.92168 7.49617 8.92168 8.00344C8.92168 8.5107 8.51057 8.92193 8.00345 8.92193C7.49631 8.92193 7.08521 8.5107 7.08521 8.00344ZM10.9799 8.00202L10.9803 8.00344L10.9799 8.00487L10.9795 8.0056L10.9793 8.00577L10.9792 8.0059L10.9785 8.00628L10.977 8.00671L10.9756 8.00628L10.9749 8.0059L10.9747 8.00577L10.9746 8.0056L10.9741 8.00487L10.9738 8.00344L10.9741 8.00202L10.9746 8.00128L10.9747 8.00111L10.9749 8.00098L10.9756 8.0006L10.977 8.00017L10.9785 8.0006L10.9792 8.00098L10.9793 8.00111L10.9795 8.00128L10.9799 8.00202ZM10.977 7.08494C10.4699 7.08494 10.0588 7.49617 10.0588 8.00344C10.0588 8.5107 10.4699 8.92193 10.977 8.92193C11.4841 8.92193 11.8952 8.5107 11.8952 8.00344C11.8952 7.49617 11.4841 7.08494 10.977 7.08494Z" fill="#B8B8B8"></path>
-                </svg>
-                <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-              </div>
-            </button>
-            <p class="ml-1.5 font-medium text-base sm:text-sm">0</p>
+              <p class="ml-1.5 font-medium text-base sm:text-sm">0</p>
+            </div>
           </div>
         </div>
-        <div data-controller="answer" class="flex font-medium text-xs text-slate-400 flex-wrap content-around xs:mt-4 sm:justify-end">
-          <button class="flex hover:underline" data-action="click->answer#show">
-            <!---->
-            <p class="ml-1">1</p>
-            <p class="ml-1">Answer</p>
-          </button>
+        <div id="comments_blog_<%= @blog.id %>">
+          <%= render partial: "comments/widget", locals: {commentable: @blog} %>
         </div>
-      </div>
-      <p aria-hidden="" class="text-violet-500 font-semibold mt-auto">
-        Read more 
-        <svg role="img" class="inline-flex opacity-50" style="pointer-events: none; width: 20px; height: auto;" viewBox="0 0 20 20" fill="currentColor">
-          <g bufferred-rendering="static">
-            <path d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"></path>
+      </article>
+    </div>
+    <footer class="flex items-center flex-wrap col-span-full w-full max-w-[44rem] 2xl:max-w-3xl mx-auto mt-14 md:mt-24 mb-4 text-gray-400">
+      <dl class="flex items-center text-xs font-bold uppercase tracking-wider">
+        <dt>
+          Last updated
+        </dt>
+        <span class="mx-2 text-gray-300" aria-hidden="">•</span>
+        <dd>
+          <time datetime="2024-02-05">
+          Feb  5, 2024
+          </time>
+        </dd>
+      </dl>
+      <span class="flex-1 bg-gray-100 flex-1 h-px mx-2"></span>
+      <a class="flex items-center justify-center w-7 h-7 hover:text-blue-500 transition-colors" href="https://twitter.com/share?text=Event Driven Machines&amp;url=https://fly.io/blog/event-driven-machines/&amp;via=flydotio" target="_blank">
+        <svg role="img" class="" viewBox="0 0 24 24" style="pointer-events: none; width: 18px; height: 18px;" fill="currentColor">
+          <g buffered-rendering="static">
+            <path d="M22.208 3.871c-.757.252-1.824.496-2.834.748-.757-.883-1.892-1.388-3.154-1.388-2.902 0-4.92 2.649-4.289 5.425-3.659-.126-6.939-1.892-9.083-4.542-1.135 1.892-.505 4.542 1.388 5.803-.757 0-1.388-.126-2.019-.505 0 2.145 1.388 4.037 3.532 4.416-.631.252-1.388.252-2.019.126.505 1.766 2.145 3.028 4.037 3.028-1.892 1.388-4.289 2.019-6.56 1.766 1.892 1.262 4.163 2.019 6.686 2.019 8.2 0 12.742-6.813 12.49-12.994.753-1.089 1.49-2.201 1.824-3.902z"></path>
           </g>
         </svg>
-      </p>
-      <div id="comments_blog_<%= @blog.id %>">
-        <%= render partial: "comments/widget", locals: {commentable: @blog} %>
-      </div>
-    </article>
-  </div>
-</section>
+        <span class="sr-only">Share this post on Twitter</span>
+      </a>
+      <a class="flex items-center justify-center w-7 h-7 hover:text-orange-500 transition-colors" href="http://news.ycombinator.com/submitlink?u=https://fly.io/blog/event-driven-machines/&amp;t=Event Driven Machines" target="_blank">
+        <svg role="img" class="" viewBox="0 0 24 24" style="pointer-events: none; width: 14px; height: 14px;" fill="currentColor">
+          <g buffered-rendering="static">
+            <path d="M16.063 2h4.75l-6.625 12.5v7.5h-4.126l.001-7.5-6.875-12.5h4.875l4.125 8.75 3.875-8.75z"></path>
+          </g>
+        </svg>
+        <span class="sr-only">Share this post on Hacker News</span>
+      </a>
+      <a class="flex items-center justify-center w-7 h-7 hover:text-red-500 transition-colors" href="http://www.reddit.com/submit?url=https://fly.io/blog/event-driven-machines/&amp;title=Event Driven Machines" target="_blank">
+        <svg role="img" class="" viewBox="0 0 24 24" style="pointer-events: none; width: 20px; height: 20px;" fill="currentColor">
+          <g buffered-rendering="static">
+            <path d="M15.029 14.708c-.762 0-1.401-.616-1.401-1.377 0-.762.639-1.4 1.401-1.4s1.378.638 1.378 1.4c0 .761-.616 1.377-1.378 1.377m.194 2.546c-.674.673-1.727 1-3.224 1-1.496 0-2.551-.327-3.223-1-.07-.07-.11-.165-.11-.264 0-.205.169-.374.374-.374.099 0 .194.04.265.11.524.525 1.406.781 2.694.781s2.17-.256 2.696-.781c.07-.07.165-.109.264-.109.205 0 .373.168.373.373 0 .099-.039.194-.109.264m-7.631-3.923c0-.762.639-1.4 1.4-1.4.76 0 1.377.638 1.377 1.4 0 .76-.616 1.377-1.377 1.377-.762 0-1.4-.617-1.4-1.377m14.408-1.515c-.002-1.242-1.023-2.264-2.265-2.265-.569-.002-1.118.213-1.535.6-1.495-.974-3.497-1.602-5.714-1.688l1.223-3.734 3.213.757c.002 1.022.842 1.861 1.864 1.862 1.022-.001 1.863-.842 1.865-1.864-.002-1.023-.843-1.864-1.865-1.865-.746 0-1.423.448-1.716 1.134l-3.52-.828-.008-.002-.33-.078-1.51 4.61c-2.301.043-4.386.669-5.937 1.664-.411-.364-.943-.568-1.501-.568-1.241.001-2.262 1.023-2.264 2.264 0 .786.408 1.517 1.076 1.929-.038.221-.057.445-.057.673 0 3.288 4.01 5.964 8.939 5.964s8.94-2.676 8.94-5.964c0-.212-.016-.422-.049-.629.713-.398 1.155-1.155 1.151-1.972"></path>
+          </g>
+        </svg>
+        <span class="sr-only">Share this post on Reddit</span>
+      </a>
+    </footer>
+  </section>
+  <dl class="text-sm w-44 ml-8 relative top-[-5.85rem] font-medium hidden xl:block">
+    <dt class="text-navy-900 mb-1">
+      Next post  ↑
+    </dt>
+    <dd class="mb-7">
+      <a class="line-clamp-2 text-violet-500 hover:text-violet-700 transition-colors" href="/blog/gpu-ga/">
+      GPUs on Blogpet.io are available to everyone!
+      </a>
+    </dd>
+    <dt class="text-navy-900 mb-1">
+      Previous post  ↓
+    </dt>
+    <dd>
+      <a class="line-clamp-2 text-violet-500 hover:text-violet-700 transition-colors" href="/blog/delegate-tasks-to-fly-machines/">
+      Delegating tasks to Blogpet Machines
+      </a>
+    </dd>
+  </dl>
+</article>

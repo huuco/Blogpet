@@ -3,10 +3,10 @@
     Comments
     <small id="comments-count-of-commentable-<%= commentable.id %>"><%= commentable.comments.count %></small>
   </h2>
-  <div class="comments-list">
     <div class="comment-form">
       <%= render "comments/form", comment: commentable.comments.build %>
     </div>
+  <div class="comments-list">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <div x-data="{ open1: false, open2: false }">
       <div class="flex justify-center items-center">
