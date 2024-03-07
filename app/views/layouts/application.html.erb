@@ -27,6 +27,9 @@
 
   <body class="bg-white <%= class_name_body %>">
     <%= render "layouts/header" %>
+    <div id="flash_message" style="position:fixed;z-index:20;width:100%" data-controller="removals">
+      <%= render "shared/flash_message" %>
+    </div>
     <main role="<%= role %>"  class="<%= class_name %>" >
       <%= yield %>
     </main>

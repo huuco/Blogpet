@@ -79,3 +79,4 @@ gem 'active_model_serializers'
 gem "grape"
 gem "grape-active_model_serializers"
 gem "grape_on_rails_routes"
+gem "activerecord-import"

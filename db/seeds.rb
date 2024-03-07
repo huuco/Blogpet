@@ -14,3 +14,14 @@
     price: (40..100).to_a.sample
   )
 end
+# ["Cuộc chiến tiền tệ", 
+# "Lý thuyết trò chơi", 
+# "Trí tuệ Do Thái", 
+# "Tâm và kế người Do Thái", 
+# "Người bán hàng vĩ đại nhất thế giới",
+# "10 Bí quyết thành công của người Do Thái",
+# "Câu chuyện Do Thái – Lịch Sử Thăng Trầm Của Dân Tộc",
+# " Dân tộc được Chúa chọn",
+# "Dẫn luận về Do Thái giáo",
+# "Miền đất hứa của tôi – Khải hoàn và bi kịch của Israel",
+# " Israel – mảnh đất của những phát minh vì con người"]

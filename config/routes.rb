@@ -28,4 +28,5 @@ Rails.application.routes.draw do
   end
   post "add_to_cart/", to: "carts#add"
   delete "remove_to_cart/", to: "carts#destroy"
+  resources :imports
 end
