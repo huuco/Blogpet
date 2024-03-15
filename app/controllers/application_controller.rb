@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     # session[:carts] = {"1" => 2, "3" => 4}
 
     @carts = session[:carts] || {}
-    @products = Product.find(@carts.keys)
+    @products = Product.where(id: @carts.keys)
     @product_carts = {}
     
     @products.each do |product|

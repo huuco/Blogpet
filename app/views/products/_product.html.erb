@@ -1,7 +1,7 @@
 <div class="max-w-[17%] p-2 w-full cursor-pointer" data-controller="item">
   <%= link_to product do %>
       <div class="card flex flex-col justify-center p-7 bg-white rounded-lg shadow-2xl" >
-        <div class="prod-img" title="<%= product.description %>">
+        <div class="prod-img" title="<%= product&.description %>">
           <%= link_to image_tag("https://unsplash.com/photos/IJjfPInzmdk/download?force=true&w=1920", class: "w-full object-cover object-center"), product%>
         </div>
         <div class="prod-title">
