@@ -6,10 +6,13 @@ class Imports::SupportImportService
   end
 
   def perform
+    return false unless valid_params?
+
     items = []
-    products = []
-    products_invalid = []
+    objects = []
+    objects_invalid = []
     line = 0
+    object_type = params[:object]
     csv = CSV.foreach(params[:file].path, encoding: "UTF-8", headers: true) rescue Array.new
     executed_time do
       ActiveRecord::Base.transaction do
@@ -18,24 +21,24 @@ class Imports::SupportImportService
           
           row.each do |element|
             line += 1
-            items.push({"product": Product.new(element.to_h), "line": line})
+            items.push(build_object(object_type, element, line))
           end
 
-          items.each{|item| products_invalid << item[:line] unless item[:product].valid?}
-          # Rails.logger.info "Line: #{products_invalid}"
+          items.each{|item| objects_invalid << item[:line] unless item[object_type.to_sym].valid?}
+          # Rails.logger.info "Line: #{objects_invalid}"
 
-          items.each{|item| products << item[:product]}
-          # Rails.logger.info "-->#{products}"
+          items.each{|item| objects << item[object_type.to_sym]}
+          # Rails.logger.info "-->#{objects}"
           
-          Product.import!(products)
+          object_import object_type, objects
           
-          products.clear
+          objects.clear
           items.clear
         end
         Rails.logger.info "::Import Success "
         true
       rescue ActiveRecord::RecordInvalid => e
-        Rails.logger.info "Error line: #{products_invalid}"
+        Rails.logger.info "Error line: #{objects_invalid}"
         Rails.logger.error "Error Import #{e.record.errors.messages}"
         false
       rescue ActiveRecord::RecordNotUnique, ActiveRecord::UnknownAttributeError, ArgumentError => e
@@ -55,5 +58,17 @@ class Imports::SupportImportService
     ensure
       puts "Time elapsed #{Time.zone.now - beginning} seconds"
     end
+  end
+
+  def build_object object_type, attributes, line
+    {"#{object_type}": object_type.classify.safe_constantize.new(attributes.to_h), "line": line}
+  end
+
+  def object_import object_type, objects
+    object_type.classify.safe_constantize.import! objects
+  end
+
+  def valid_params?
+    params[:object] && params[:file] && params[:file].original_filename.include?(".csv")
   end
 end
