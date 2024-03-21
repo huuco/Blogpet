@@ -19,7 +19,7 @@ kill_timeout = "5s"
 
 [env]
   DATABASE_URL = "postgres://postgres:eFcFQtjjBRuYt0a@blogpet-db.flycast:5432"
-  PORT = "4000"
+  PORT = "3000"
   POSTGRES_DB_PROD = "blogpet_production"
   POSTGRES_HOST_PROD = "blogpet-db.internal"
   POSTGRES_PASSWORD_PROD = "eFcFQtjjBRuYt0a"
@@ -29,7 +29,7 @@ kill_timeout = "5s"
 
 [[services]]
   protocol = "tcp"
-  internal_port = 4000
+  internal_port = 3000
   processes = ["app"]
 
   [[services.ports]]

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   db:
     image: postgres
@@ -22,4 +22,26 @@ services:
       - "4000:4000"
     depends_on:
       - db
+      - redis
     restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    logging:
+      driver: none
+    tty: true
+    volumes:
+     - .:/myapp
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    tty: true
+    environment:
+      RAILS_ENV: development
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - .:/myapp
+    depends_on:
+      - redis

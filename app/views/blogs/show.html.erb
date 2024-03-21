@@ -37,7 +37,7 @@
   <dl class="text-sm w-52 relative top-[-6.5rem] hidden xl:block">
     <dt class="sr-only">Author</dt>
     <dd class="flex items-center space-x-3 mb-7">
-      <%= image_tag current_user.avatar, class: "w-10 h-10 object-cover rounded-xl" %>
+      <%= image_tag current_user&.avatar || "4.jpg", class: "w-10 h-10 object-cover rounded-xl" %>
       <dl class="text-sm font-medium leading-5 whitespace-no-wrap">
         <dt class="sr-only">Name</dt>
         <dd class="text-navy-900">

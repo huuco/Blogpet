@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.new comment_params
     @comment.user = current_user
     @comment.save
+    HardJob.perform_at(Time.zone.now + 1.minutes,@comment.id)
     # @commentable.reload if using commentable.comments.size and remove cache
     # using count, query directly db, size using cache
     respond_to do |format|

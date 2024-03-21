@@ -31,4 +31,6 @@ Rails.application.routes.draw do
   resources :imports
   get "blogpet/", to: "dashboards#index"
   root "dashboards#index"
+  # Sidekiq::Web.set :sessions, false
+  mount Sidekiq::Web => "/sidekiq"
 end
