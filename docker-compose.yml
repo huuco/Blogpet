@@ -35,7 +35,7 @@ services:
      - .:/myapp
   sidekiq:
     build: .
-    command: bundle exec sidekiq
+    # command: bundle exec sidekiq
     tty: true
     environment:
       RAILS_ENV: development

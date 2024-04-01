@@ -1,7 +1,5 @@
 class ImportsController < ApplicationController
   def index
-    # @form = Imports::SupportImportService.new(params).perform
-    # @form = 
   end
 
   def create

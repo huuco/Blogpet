@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   post "add_to_cart/", to: "carts#add"
   delete "remove_to_cart/", to: "carts#destroy"
   resources :imports
+  resources :exports
   get "blogpet/", to: "dashboards#index"
   root "dashboards#index"
   # Sidekiq::Web.set :sessions, false
