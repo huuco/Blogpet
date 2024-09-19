@@ -1,0 +1,10 @@
+<%= form_with(model: [parent_comment.commentable, comment], data: { controller: "reset-form" }) do |form| %>
+  <%= form.hidden_field :parent_id, value: parent_comment.id %>
+  <div class="field">
+    <%= form.text_area :content, placeholder: "Write a reply...", required: true %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Reply" %>
+    <button type="button" data-action="click->reset-form#cancel">Cancel</button>
+  </div>
+<% end %>

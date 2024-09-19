@@ -23,3 +23,17 @@ Things you may want to cover:
 
 * ...
 # Blogpet
+
+# if comment.parent.present? 
+#  find parent_id comment
+# append comment comment list
+
+
+# if commnet parent nil?
+#  append comment list
+
+#Comment C
+#Comment A
+#  |-> Comment D 
+#  |-> Comment E
+#Commnet B

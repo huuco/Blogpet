@@ -1,17 +1,23 @@
+<%= form_with(model: [commentable, comment], local: false,data: { turbo_stream: true }) do |form| %>
+  <%= form.hidden_field :blog_id, value: commentable.is_a?(Blog) ? commentable.id : nil %>
+  <%= form.hidden_field :comment_id, value: commentable.is_a?(Comment) ? commentable.id : nil %>
+  <%= form.hidden_field :parent_id %>
+  <% if comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+      <ul>
+        <% comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <%end %>
+      </ul>
+    </div>
+  <% end %>
 
-<%= form_for [comment.commentable, comment] do |f|%>
-  <%= f.hidden_field :parent_id %>
-  <div class="flex space-x-2 space-y-2">
-    <div class="group relative flex flex-shrink-0 self-start cursor-pointer pt-2">
-    <%= image_tag  "2.jpg" , class: " h-10 w-10 object-fill rounded-full" %>
-    </div>
-    <div class="flex items-center justify-center space-x-2">
-      <div class="block">
-        <div class="rounded-xl px-2">
-          <%= f.text_area :content, id: "" , class: "w-fit w-[25rem] text-sm outline-none border-gray-300  resize-none border rounded-lg placeholder:text-sm", placeholder: (f.object.parent_id.nil? ? 'Share your idea.' : 'Leave your reply.')%>
-        </div>
-          <%= f.submit comment.new_record? ? "Comment" : "Change", class: 'inline-flex items-center py-2.5 px-4 text-xs cursor-pointer  text-center font-bold bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800' %>
-      </div>
-    </div>
+  <div class="field">
+    <%= form.text_area :content, placeholder: "Add a comment", class: "w-full px-3 py-2 text-sm text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500 resize-none" %>
   </div>
-<%end%>
+
+  <div class="actions">
+    <%= form.submit "Post", class: "text-blue-500 font-semibold text-sm hover:text-blue-600 transition duration-300 ease-in-out cursor-pointer" %>
+  </div>
+<% end %>

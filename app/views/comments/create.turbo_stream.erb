@@ -1,3 +1,14 @@
-<%= turbo_stream.update "comments_blog_#{@commentable.id}" do %>
-  <%= render partial: "comments/widget", locals: {commentable: @commentable} %>
-<%end%>
+<% if @comment.parent_id.nil? %>
+  <%= turbo_stream.append("comments_container_#{@commentable.id}", 
+                          partial: "comments/comment", 
+                         locals: { comment: @comment }) %>
+  <%= turbo_stream.replace("new_comment_form_#{@commentable.id}", 
+                          partial: "comments/form", 
+                          locals: { comment: Comment.new, commentable: @commentable }) %>
+<% else %>
+  <%= turbo_stream.append("replies_container_#{@comment.parent_id}", 
+                          partial: "comments/comment", 
+                          locals: { comment: @comment }) %>
+  <%= turbo_stream.replace("reply_form_container_#{@comment.parent_id}", "") %>
+<% end %>
+<%= turbo_stream.update("comments_count_#{@commentable.id}", @commentable.comments.count) %>

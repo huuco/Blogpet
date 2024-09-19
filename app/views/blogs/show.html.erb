@@ -114,9 +114,19 @@
             </div>
           </div>
         </div>
-        <div id="comments_blog_<%= @blog.id %>">
-          <%= render partial: "comments/widget", locals: {commentable: @blog} %>
-        </div>
+       <!-- ... other blog content ... -->
+
+      <div id="comments_container_<%= @blog.id %>" class="mt-8 space-y-6">
+        <%= render @blog.comments.not_children %>
+      </div>
+
+      <div id="new_comment_form_<%= @blog.id %>" class="mt-8">
+        <%= render 'comments/form', comment: @comment, commentable: @blog %>
+      </div>
+
+      <p class="mt-4 text-sm text-gray-600">
+        Total comments: <span id="comments_count_<%= @blog.id %>" class="font-semibold"><%= @blog.comments.count %></span>
+      </p>
       </article>
     </div>
     <footer class="flex items-center flex-wrap col-span-full w-full max-w-[44rem] 2xl:max-w-3xl mx-auto mt-14 md:mt-24 mb-4 text-gray-400">

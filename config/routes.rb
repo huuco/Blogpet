@@ -14,12 +14,15 @@ Rails.application.routes.draw do
   end
   resources :checkouts
   resources :comments do
+    member do
+      post :reply
+    end
     resources :comments
   end
   resources :blogs do
     resources :comments do
       member do
-        get :reply
+        post :reply
       end
     end
     member do
