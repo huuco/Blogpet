@@ -1,4 +1,4 @@
-<% product_carts&.each do |product, count| %>
+<% product_quanties_carts&.each do |product, count| %>
   <%= turbo_frame_tag "product_item_#{product.id}" do %>
     <li class="flex py-6">
       <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">

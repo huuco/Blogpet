@@ -10,24 +10,29 @@ class CheckoutsController < ApplicationController
 
   def create
     if user_signed_in?
-      @order = Order.new order_params
-      @order.transaction_id = SecureRandom.hex
-      @order.user = current_user
-      @order.total = @total + @shipping.price
-      @order.save
-      @product_carts.each do |product, quantity|
-        @order.order_details.create(
-          product: product, 
-          quantity: quantity, 
-          sub_total: product.price*quantity
-        )
+      @order = current_user.orders.new(order_params.merge(
+        transaction_id: SecureRandom.hex,
+        total: @total + @shipping.price
+      ))
+
+      if @order.save
+        @product_quanties_carts.each do |product, quantity|
+          @order.order_details.create!(
+            product: product,
+            quantity: quantity,
+            sub_total: product.price * quantity
+          )
+        end
+
+        session.delete(:carts)
+        session.delete(:form_data)
+        redirect_to root_path, notice: 'Order was successfully created.'
+      else
+        render :new
       end
-      session.delete :carts
-      session.delete :form_data
-      redirect_to root_path
     else
       session[:form_data] = params
-      redirect_to new_user_session_path
+      redirect_to new_user_session_path, alert: 'Please sign in to complete your order.'
     end
   end
 

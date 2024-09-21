@@ -1,10 +1,19 @@
 <%= form_with(model: [parent_comment.commentable, comment], data: { controller: "reset-form" }) do |form| %>
   <%= form.hidden_field :parent_id, value: parent_comment.id %>
+  
   <div class="field">
-    <%= form.text_area :content, placeholder: "Write a reply...", required: true %>
+    <%= form.text_area :content,
+                       placeholder: "Write a reply...",
+                       required: true,
+                       class: "w-full px-3 py-2 text-sm text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500 resize-none" %>
   </div>
+  
   <div class="actions">
-    <%= form.submit "Reply" %>
-    <button type="button" data-action="click->reset-form#cancel">Cancel</button>
+    <%= form.submit "Reply",
+                    data: { action: "click->reset-form#hide" },
+                    class: "text-blue-500 font-semibold text-sm hover:text-blue-600 transition duration-300 ease-in-out cursor-pointer" %>
+    <button type="button" data-action="click->reset-form#cancel" class="text-gray-500 font-semibold text-sm hover:text-gray-600 transition duration-300 ease-in-out cursor-pointer ml-2">
+      Cancel
+    </button>
   </div>
 <% end %>

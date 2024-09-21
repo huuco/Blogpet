@@ -10,18 +10,23 @@ class ApplicationController < ActionController::Base
     # carts = {"product_id": count}
     # carts = {"1" => 2, "3" => 4}
     # session[:carts] = {"1" => 2, "3" => 4}
-
     @carts = session[:carts] || {}
-    @products = Product.where(id: @carts.keys)
-    @product_carts = {}
-    
-    @products.each do |product|
-      @carts[product.id.to_s] && @product_carts[product] = @carts[product.id.to_s]
+    if @carts.present?
+      @products = Product.where(id: @carts.keys).index_by(&:id)
+      @product_quanties_carts = @carts.each_with_object({}) do |(product_id, count), hash|
+        product = @products[product_id.to_i]
+        hash[product] = count if product.present?
+      end
+
+      @item_count = @carts.values.sum || 0
+      @total = total_cart
+    else
+      @products = {}
+      @product_quanties_carts = {}
+      @item_count = 0
+      @total = 0
     end
-
-    @item_count = @carts.values.sum || 0
-    @total = total_cart
-
+    Rails.logger.info "::::::::::::::product_quantites_carts: #{@product_quantites_carts}"
     # p ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
     # p ":::::::::::________@carts: #{@carts}________:::::::::::::::::::::::::"
     # p ":::::::::::________@product_carts: #{@product_carts}________:::::::::"
@@ -39,13 +44,7 @@ class ApplicationController < ActionController::Base
   end
 
   def total_cart
-    @total = 0
-
-    @product_carts.map do |product, count|
-      @total += product.price * count
-    end
-
-    @total
+    @product_quanties_carts.sum{|product, count| product.price * count}
   end
 
   def current_user

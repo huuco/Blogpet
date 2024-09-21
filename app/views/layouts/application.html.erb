@@ -44,7 +44,7 @@
     </main>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-    <% render "carts/cart", product_carts: @product_carts %>
-    <% render "shared/login" %>
+    <%= render "carts/cart", product_quanties_carts: @product_quanties_carts %>
+    <%= render "shared/login" %>
   </body>
 </html>

@@ -5,7 +5,6 @@ class LikesController < ApplicationController
   
   def create
     @product.like(current_user)
-    @product.reload
 
     respond_to do |format|
       format.turbo_stream
