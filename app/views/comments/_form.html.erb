@@ -1,7 +1,5 @@
 <%= form_with(model: [commentable, comment], local: false,data: { turbo_stream: true }) do |form| %>
-  <%= form.hidden_field :blog_id, value: commentable.is_a?(Blog) ? commentable.id : nil %>
-  <%= form.hidden_field :comment_id, value: commentable.is_a?(Comment) ? commentable.id : nil %>
-  <%= form.hidden_field :parent_id %>
+
   <% if comment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>

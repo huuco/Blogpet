@@ -115,11 +115,11 @@
           </div>
         </div>
        <!-- ... other blog content ... -->
-
-      <div id="comments_container_<%= @blog.id %>" class="mt-8 space-y-6">
-        <%= render @blog.comments.not_children %>
+      <div class="mt-8">
+        <div id="comments_container_<%= @blog.id %>" class="mt-8 space-y-6">
+          <%= render @blog.comments.not_children.created_at_desc %>
+        </div>
       </div>
-
       <div id="new_comment_form_<%= @blog.id %>" class="mt-8">
         <%= render 'comments/form', comment: @comment, commentable: @blog %>
       </div>

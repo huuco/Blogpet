@@ -21,7 +21,10 @@
                   id: "reply_button_#{comment.id}" %>
   </div>
 
-  <div id="reply_form_container_<%= comment.id %>" class="mt-4 bg-gray-50 rounded-lg p-4 shadow-sm"></div>
+  <div id="reply_form_container_<%= comment.id %>" 
+       class="mt-4 bg-gray-50 rounded-lg p-4 shadow-sm"
+       >
+  </div>
 
   <div id="replies_container_<%= comment.id %>" class="mt-4 space-y-4 pl-4 border-l-2 border-gray-200">
     <%= render comment.replies.where(parent_id: comment.id).created_at_desc if comment.replies.any? %>
