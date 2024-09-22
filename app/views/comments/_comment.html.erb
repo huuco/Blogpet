@@ -1,17 +1,18 @@
 
 <!-- New Comment Paste Here -->
-
-<div id="comment_<%= comment.id %>" class="flex flex-col bg-white rounded-lg shadow-md p-6 mb-6 transition duration-300 ease-in-out hover:shadow-lg <%= comment.parent_id ? 'ml-8' : '' %>">
-  <div class="flex items-center mb-2">
+<div id="comment_<%= comment.id %>" 
+    class="flex flex-col bg-white rounded-lg shadow-md p-6 mb-6 transition duration-300 ease-in-out hover:shadow-lg <%= comment.root_comment? ? 'ml-8' : '' %>">
+  <div class="flex items-center mb-2 ml-2">
     <!-- Assuming you have a user avatar, if not, you can remove this img tag -->
     <%= image_tag comment.user.avatar, alt: "#{comment.user.username}", class: "h-10 w-10 object-fill rounded-full" %>
     <p class="font-semibold text-blue-600"><%= comment&.user&.username %></p>
   </div>
-  <p class="text-gray-700 text-base mb-2"><%= comment.content %></p>
-  <p class="text-xs text-gray-500 mb-2">
-    Posted <span class="font-medium"><%= time_ago_in_words(comment&.created_at) %></span> ago
+  <div class="ml-2">
+    <p class="text-gray-700 text-base mb-2"><%= comment.content %></p>
+    <p class="text-xs text-gray-500 mb-2">
+      Posted <span class="font-medium"><%= time_ago_in_words(comment&.created_at) %></span> ago
   </p>
-
+  </div>
   <div class="mt-2 flex justify-start">
     <%= button_to "Reply",
                   polymorphic_path([:reply, comment&.commentable, comment]),
@@ -19,6 +20,13 @@
                   form: { data: { turbo_stream: true } },
                   class: "text-sm text-gray-500 hover:text-gray-700 hover:underline transition duration-300 ease-in-out reply-button",
                   id: "reply_button_#{comment.id}" %>
+    <% if comment.destroy? current_user %>
+      <%= link_to "Delete",
+                  polymorphic_path([comment&.commentable, comment]),
+                  data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this comment?" },
+                  class: "text-sm text-gray-500 hover:text-gray-700 hover:underline transition duration-300 ease-in-out reply-button",
+                  id: "delete_button_#{comment.id}" %>
+    <% end %>
   </div>
 
   <div id="reply_form_container_<%= comment.id %>" 

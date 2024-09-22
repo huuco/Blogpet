@@ -1,4 +1,4 @@
-<% if @comment.parent_id.nil? %>
+<% if @comment.root_comment? %>
   <%= turbo_stream.prepend("comments_container_#{@commentable.id}", 
                           partial: "comments/comment", 
                          locals: { comment: @comment }) %>

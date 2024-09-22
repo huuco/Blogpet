@@ -6,7 +6,14 @@ class Comment < ApplicationRecord
 
   delegate :username, to: :user, prefix: true
 
-  scope :created_at_desc, -> {order(created_at: :desc)}
-  scope :not_children, -> {where(parent: nil)}
- 
+  scope :created_at_desc, -> { order(created_at: :desc) }
+  scope :root_comments, -> { where(parent_id: nil) }
+
+  def root_comment?
+    parent_id.nil?
+  end
+
+  def destroy? current_user
+    current_user&.id == user_id
+  end
 end
