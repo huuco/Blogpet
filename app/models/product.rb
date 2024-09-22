@@ -33,17 +33,12 @@ class Product < ApplicationRecord
 
   def star
     return [0] if star_count.empty?
-    [
-      (star_count.count(1)*1.0/total_star)*100,
-      (star_count.count(2)*1.0/total_star)*100,
-      (star_count.count(3)*1.0/total_star)*100,
-      (star_count.count(4)*1.0/total_star)*100,
-      (star_count.count(5)*1.0/total_star)*100
-    ]
+    total = star_count.size.to_f
+    (1..5).map { |rating| (star_count.count(rating) / total * 100).round(2) }
   end
 
   def coverage_star
     return 0 if star_count.empty?
-    star_count.sum*1.0 / total_star
+    star_count.sum.to_f / star_count.size
   end
 end

@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include Pagy::Backend 
   after_action :store_user_location!, if: :storable_location?
   before_action :session_cart
 
@@ -26,7 +27,7 @@ class ApplicationController < ActionController::Base
       @item_count = 0
       @total = 0
     end
-    Rails.logger.info "::::::::::::::product_quantites_carts: #{@product_quantites_carts}"
+    # Rails.logger.info "::::::::::::::product_quantites_carts: #{@product_quantites_carts}"
     # p ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
     # p ":::::::::::________@carts: #{@carts}________:::::::::::::::::::::::::"
     # p ":::::::::::________@product_carts: #{@product_carts}________:::::::::"
