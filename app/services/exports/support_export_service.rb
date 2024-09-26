@@ -1,9 +1,16 @@
 require "csv"
 class Exports::SupportExportService
-  HEADERES = {
-    "blog" => ["Id", "User_id", "Title", "Description", "Min_read", "Viewer", "Status", "Created_at", "Updated_at"],
-    "product" =>  ["Id", "Name", "Description", "Price", "Created_at", "Updated_at"],
-    "user" => ["Id", "Email", "Username", "Created_at", "Updated_at"] 
+  HEADERS = {
+    "blog" => [
+      "Id", "User_id", "Title", "Description", "Min_read", "Viewer",
+      "Status", "Created_at", "Updated_at"
+    ],
+    "product" => [
+      "Id", "Name", "Description", "Price", "Created_at", "Updated_at"
+    ],
+    "user" => [
+      "Id", "Email", "Username", "Created_at", "Updated_at"
+    ]
   }
   OBJECT_TYPES = {
     "product" => Product, 
@@ -37,18 +44,11 @@ class Exports::SupportExportService
     begin
       yield
     ensure
-      puts "Time elapsed #{Time.zone.now - beginning} seconds"
+      Rails.logger.info "Time elapsed #{Time.zone.now - beginning} seconds"
     end
   end
 
-  def to_csv_row item
-    case object
-    when "product"
-      [item.id, item.name, item.description, item.price, item.created_at, item.updated_at]
-    when "user"
-      [item.id, item.email, item.username, item.created_at, item.updated_at]
-    when "blog"
-      [item.id, item.user_id, item.description, item.min_read, item.status, item.created_at, item.updated_at]
-    end
+  def to_csv_row(item)
+    HEADERS[object].map { |header| item.send(header.downcase) }
   end
 end

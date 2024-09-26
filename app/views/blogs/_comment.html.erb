@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "blog_comments" do %>
+  <div id="comments_container_<%= @blog.id %>" 
+       class="mt-8 h-96 overflow-y-auto border border-gray-200 rounded-lg p-4">
+    <%= render partial: 'comments/comment', collection: @comments %>
+  </div>
+  <div class="mt-4">
+    <%== pagy_nav(@pagy) %>
+  </div>
+<% end %>

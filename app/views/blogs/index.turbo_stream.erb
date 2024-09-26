@@ -1,0 +1,17 @@
+<%= turbo_stream.remove("articles_placeholder") %>
+
+<%= turbo_stream.append("articles_list") do %>
+  <div class="mt-8 md:grid md:grid-cols-2 lg:grid-cols-3 gap-8"  data-page-number="<%= params[:page]%>">
+    <%= render @blogs %>
+  </div> 
+<% end %>
+
+<% if @pagy.next.present? %>
+  <%= turbo_stream.replace "articles_pagination" do %>
+    <%= turbo_frame_tag "articles_pagination", 
+        src: blogs_path(page: @pagy.next, format: "turbo_stream"), 
+        loading: "lazy", 
+        data: { page: params[:page] } %>
+  <% end %>
+<% end %>  
+
