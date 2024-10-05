@@ -116,8 +116,14 @@
         </div>
        <!-- ... other blog content ... -->
        <%= turbo_frame_tag "blog_comments" do %>
+       <div id="new_comment_form_<%= @blog.id %>" class="mt-8">
+          <%= render 'comments/form', comment: @comment, commentable: @blog %>
+        </div>
         <% cache [@blog, @comments.maximum(:updated_at)] do %>
           <div class="mt-8">
+           <div class="mt-4" >
+              <%== pagy_nav_tailwind(@pagy) %>
+            </div>
             <div id="comments_container_<%= @blog.id %>" 
                 class="mt-8 h-96 overflow-y-auto border border-gray-200 rounded-lg p-4"
                 >
@@ -128,9 +134,7 @@
             </div>
         </div>
       <% end %>
-        <div id="new_comment_form_<%= @blog.id %>" class="mt-8">
-          <%= render 'comments/form', comment: @comment, commentable: @blog %>
-        </div>
+        
       <% end %>
       </article>
     </div>
